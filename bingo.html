@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bingo Board</title>
+	<style>
+		.row {
+			display: flex;
+		}
+		.cell {
+			width: 75px;
+			height: 75px;
+			border: 1px solid black;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 30px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		.marked {
+			background-color: lightgray;
+		}
+	</style>
+</head>
+<body>
+	<div id="board"></div>
+
+	<script>
+		let boardState = [];
+		let bingoBoard = [];
+
+		function generateRandomNumber(min, max) {
+			return Math.floor(Math.random() * (max - min + 1) + min);
+		}
+
+		function generateBoard() {
+			const min = 1;
+			const max = 75;
+			const usedNumbers = new Set();
+
+			for (let i = 0; i < 5; i++) {
+				const row = [];
+				for (let j = 0; j < 5; j++) {
+					let randomNumber = generateRandomNumber(min, max);
+					while (usedNumbers.has(randomNumber)) {
+						randomNumber = generateRandomNumber(min, max);
+					}
+					usedNumbers.add(randomNumber);
+					row.push(randomNumber);
+				}
+				bingoBoard.push(row);
+			}
+		}
+
+		function saveState() {
+			localStorage.setItem('boardState', JSON.stringify(boardState));
+		}
+
+		function loadState() {
+			const savedState = localStorage.getItem('boardState');
+			if (savedState) {
+				boardState = JSON.parse(savedState);
+			}
+		}
+
+		function initBoard() {
+			const boardContainer = document.querySelector('#board');
+			boardContainer.innerHTML = '';
+
+			for (let i = 0; i < 5; i++) {
+				const rowContainer = document.createElement('div');
+				rowContainer.classList.add('row');
+
+				for (let j = 0; j < 5; j++) {
+					const cellContainer = document.createElement('div');
+					cellContainer.classList.add('cell');
+
+					const numberContainer = document.createElement('div');
+					numberContainer.classList.add('number');
+					numberContainer.textContent = bingoBoard[i][j];
+					numberContainer.dataset.index = i * 5 + j;
+
+					cellContainer.appendChild(numberContainer);
+					rowContainer.appendChild(cellContainer);
+				}
+				boardContainer.appendChild(rowContainer);
+			}
+		}
+
+		function markCell() {
+			// toggle the 'marked' class on the clicked cell
+			this.classList.toggle('marked');
+			
+			// get the index of the clicked cell
+			const row = parseInt(this.dataset.row);
+			const col = parseInt(this.dataset.col);
+			const cellIndex = col + (row * 5);
+			
+			// update the board state with the new marked status of the cell
+			boardState[row][col] = this.classList.contains('marked');
+			
+			saveState();
+		}
+
+
+		const cells = document.querySelectorAll('.cell');
+		for (let i = 0; i < cells.length; i++) {
+			cells[i].addEventListener('click', markCell);
+		}
+
+		generateBoard();
+		initBoard();
+		loadState();
+	</script>
+</body>
+</html>
