@@ -1,4 +1,4 @@
-table {
+/* table {
 	width: 100%;
 	max-width: 500px;
 	margin: 0 auto;
@@ -50,6 +50,65 @@ table {
 	td {
 	  height: 30px;
 	  font-size: 10px;
+	}
+  }
+   */
+
+   table {
+	width: 100%;
+	max-width: 500px;
+	margin: 0 auto;
+	border-collapse: collapse;
+  }
+  
+  td {
+	width: 20%;
+	height: 80px;
+	border: 1px solid #ccc;
+	text-align: center;
+	font-size: 4vw; /* using 4vw as default font size */
+	font-weight: bold;
+	cursor: pointer;
+	white-space: nowrap; /* prevent word wrapping */
+	overflow: hidden; /* hide overflow */
+	text-overflow: ellipsis; /* show ellipsis for overflow */
+  }
+  
+  td.marked {
+	background-color: #f2f2f2;
+	color: #999;
+  }
+  
+  button {
+	display: block;
+	margin: 0 auto;
+	font-size: 18px;
+	padding: 10px 20px;
+	background-color: #1abc9c;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+	td {
+	  height: 60px;
+	  font-size: 3vw; /* reducing font size for smaller screens */
+	}
+  }
+  
+  @media (max-width: 480px) {
+	td {
+	  height: 40px;
+	  font-size: 2.5vw; /* reducing font size further for smaller screens */
+	}
+  }
+  
+  @media (max-width: 320px) {
+	td {
+	  height: 30px;
+	  font-size: 2vw; /* reducing font size even further for smallest screens */
 	}
   }
   
