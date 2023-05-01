@@ -1,15 +1,16 @@
 table {
 	border-collapse: collapse;
 	margin: 20px;
-	width: 95%;
+	width: calc(100% - 50px);
 	overflow-x: auto;
 }
+
 
 td {
 	border: 1px solid black;
 	text-align: center;
 	vertical-align: middle;
-	width: 100px;
+	width: 20%;
 	height: 100px;
 	/* Höhe der Zelle */
 	font-family: Arial, sans-serif;
@@ -33,26 +34,19 @@ button {
 }
 
 @media (max-width: 1080px) {
-	table {
-		border-collapse: collapse;
-		margin: 20px;
-		width: 95%;
-		overflow-x: auto;
-	}
-
 	td {
 		height: 60px;
 		font-size: 3vw;
-		/* reducing font size for smaller screens */
+		width: 20%;
 	}
 }
-
 
 @media (max-width: 768px) {
 	td {
 		height: 60px;
 		font-size: 3vw;
 		/* reducing font size for smaller screens */
+		width: 25%;
 	}
 }
 
@@ -61,8 +55,8 @@ button {
 		height: 40px;
 		font-size: 2.5vw;
 		/* reducing font size further for smaller screens */
+		width: 33.33%;
 	}
-
 }
 
 @media (max-width: 320px) {
@@ -70,5 +64,6 @@ button {
 		height: 30px;
 		font-size: 2vw;
 		/* reducing font size even further for smallest screens */
+		padding: 0.2em;
 	}
 }
