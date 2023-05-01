@@ -22,6 +22,8 @@ td {
 }
 
 .table-wrap {
+	max-width: 1024px;
+	margin: 0 auto;
 	padding: 20px;
 	height: 100vh;
 	display: flex;
