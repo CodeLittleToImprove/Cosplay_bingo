@@ -133,7 +133,7 @@ function adjustCellSize() {
             cell.style.fontSize = "20px";
         }
 
-        cell.style.height = cellHeight + "px"; // set height of each cell
+        // cell.style.height = cellHeight + "px"; // set height of each cell
     }
 }
 
