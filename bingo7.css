@@ -48,14 +48,14 @@ button {
 
 @media (max-width: 1080px) {
 	td {
-		height: 60px;
+		height: 20%;
 		font-size: 3vw;
 	}
 }
 
 @media (max-width: 768px) {
 	td {
-		height: 60px;
+		height: 20%;
 		font-size: 3vw;
 		/* reducing font size for smaller screens */
 	}
@@ -63,7 +63,7 @@ button {
 
 @media (max-width: 480px) {
 	td {
-		height: 40px;
+		height: 20%;
 		font-size: clamp(16px, 2.5vw, 22px) !important; 
 		/* reducing font size further for smaller screens */
 	}
@@ -71,7 +71,7 @@ button {
 
 @media (max-width: 320px) {
 	td {
-		height: 30px;
+		height: 20%;
 		font-size: 2vw;
 		/* reducing font size even further for smallest screens */
 		padding: 0.2em;
