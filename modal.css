@@ -5,7 +5,7 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 9999;
   }
   
@@ -17,10 +17,16 @@
 	background-color: #fff;
 	padding: 20px;
 	border-radius: 5px;
+	max-width: 90%;
+	max-height: 90%;
+	overflow: auto;
   }
   
   #closeBtn {
 	display: block;
 	margin-top: 10px;
   }
-  
+
+#myModal {
+	display: none;
+}
