@@ -71,17 +71,31 @@ closeButton.addEventListener("click", () => {
 // Handle clicks on the cells
 for (let row of table.rows) {
 	for (let cell of row.cells) {
-		cell.addEventListener("click", () => {
-			cell.classList.toggle("marked");
-			saveState();
-		});
-		cell.addEventListener("dblclick", () => {
-			console.log("Yup that was double click");
-			let word = cell.textContent;
-			openModal("Bingo Wort", "Definition von " + word, "Button 1", "Button 2");
-		});
+	  cell.addEventListener("click", () => {
+		cell.classList.toggle("marked");
+		saveState();
+	  });
+	  cell.addEventListener("touchend", () => {
+		if (isMobileDevice()) {
+		  // Handle touch event
+		  console.log("Touch event detected");
+		  let word = cell.textContent;
+		  openModal("Bingo Wort", "Definition von " + word, "Button 1", "Button 2");
+		}
+	  });
+	  cell.addEventListener("dblclick", () => {
+		console.log("Yup that was double click");
+		let word = cell.textContent;
+		openModal("Bingo Wort", "Definition von " + word, "Button 1", "Button 2");
+	  });
 	}
-}
+  }
+  
+  // Check if the device is a mobile device
+  function isMobileDevice() {
+	return typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('IEMobile') !== -1;
+  }
+  
 
 
 
