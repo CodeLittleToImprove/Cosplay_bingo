@@ -59,7 +59,6 @@ function openModal(title, text, button1Text, button2Text) {
 	document.getElementById("modal-text").textContent = text;
 	document.getElementById("modal-button1").textContent = button1Text;
 	document.getElementById("modal-button2").textContent = button2Text;
-
 	modal.style.display = "block";
 }
 
@@ -106,7 +105,7 @@ for (let row of table.rows) {
                 // Calculate touch distance
                 let touchDistance = Math.sqrt(Math.pow(touchendX - touchstartX, 2) + Math.pow(touchendY - touchstartY, 2));
 
-                if (touchDistance < 5) {
+                if (touchDistance < 20) { // erhöhter Schwellenwert für Single-Touch-Event
                     // Single touch event detected
                     if (!cell.classList.contains("marked")) {
                         cell.classList.add("marked");
@@ -115,7 +114,7 @@ for (let row of table.rows) {
                         cell.classList.remove("marked");
                         saveState();
                     }
-                } else {
+                } else if (touchDistance < 100) { // erhöhter Schwellenwert für Double-Touch-Event
                     // Double touch event detected
                     let word = cell.textContent;
                     openModal("Bingo Wort", "Definition von " + word, "Button 1", "Button 2");
