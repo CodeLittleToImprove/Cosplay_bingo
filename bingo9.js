@@ -73,8 +73,10 @@ for (let row of table.rows) {
     for (let cell of row.cells) {
         cell.addEventListener("click", () => {
             cell.classList.toggle("marked");
+			console.log("Wurde Markiert");
             saveState();
         });
+
         cell.addEventListener("dblclick", () => {
             console.log("Yup that was double click");
             let word = cell.textContent;
@@ -87,6 +89,7 @@ for (let row of table.rows) {
                 touchstart = event.changedTouches[0].clientX;
             }
         });
+
         cell.addEventListener("touchend", (event) => {
             if (isMobileDevice()) {
                 let touchend = event.changedTouches[0].clientX;
@@ -94,8 +97,10 @@ for (let row of table.rows) {
                 if (Math.abs(touchstart - touchend) < 5) {
                     // Single touch event detected
                     console.log("Yup that was single touch click");
-                    cell.classList.toggle("marked");
-                    saveState();
+                    // Moved from click event
+                    // cell.classList.toggle("marked");
+                    // saveState();
+                    // To here
                 } else {
                     // Double touch event detected
                     let word = cell.textContent;
