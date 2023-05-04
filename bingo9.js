@@ -70,50 +70,61 @@ closeButton.addEventListener("click", () => {
 
 // Handle clicks on the cells
 for (let row of table.rows) {
-	for (let cell of row.cells) {
-	  // Handle click event
-	  cell.addEventListener("click", () => {
-		if (!isMobileDevice()) {
-		  cell.classList.toggle("marked");
-		  saveState();
-		}
-	  });
-  
-	  // Handle double click event
-	  cell.addEventListener("dblclick", () => {
-		let word = cell.textContent;
-		openModal("Bingo Wort", "Definition von " + word, "Button 1", "Button 2");
-	  });
-  
-	  let touchstart = null;
-	  cell.addEventListener("touchstart", (event) => {
-		if (isMobileDevice()) {
-		  touchstart = event.changedTouches[0].clientX;
-		}
-	  });
-  
-	  cell.addEventListener("touchend", (event) => {
-		if (isMobileDevice()) {
-		  let touchend = event.changedTouches[0].clientX;
-  
-		  if (Math.abs(touchstart - touchend) < 5) {
-			// Single touch event detected
-			if (!cell.classList.contains("marked")) {
-			  cell.classList.add("marked");
-			  saveState();
-			} else {
-			  cell.classList.remove("marked");
-			  saveState();
-			}
-		  } else {
-			// Double touch event detected
-			let word = cell.textContent;
-			openModal("Bingo Wort", "Definition von " + word, "Button 1", "Button 2");
-		  }
-		}
-	  });
-	}
-  }
+    for (let cell of row.cells) {
+        let touchstartX = null;
+        let touchstartY = null;
+        let touchendX = null;
+        let touchendY = null;
+
+        // Handle click event
+        cell.addEventListener("click", () => {
+            if (!isMobileDevice()) {
+                cell.classList.toggle("marked");
+                saveState();
+            }
+        });
+
+        // Handle double click event
+        cell.addEventListener("dblclick", () => {
+            let word = cell.textContent;
+            openModal("Bingo Wort", "Definition von " + word, "Button 1", "Button 2");
+        });
+
+        // Handle touch events
+        cell.addEventListener("touchstart", (event) => {
+            if (isMobileDevice()) {
+                touchstartX = event.changedTouches[0].clientX;
+                touchstartY = event.changedTouches[0].clientY;
+            }
+        });
+
+        cell.addEventListener("touchend", (event) => {
+            if (isMobileDevice()) {
+                touchendX = event.changedTouches[0].clientX;
+                touchendY = event.changedTouches[0].clientY;
+
+                // Calculate touch distance
+                let touchDistance = Math.sqrt(Math.pow(touchendX - touchstartX, 2) + Math.pow(touchendY - touchstartY, 2));
+
+                if (touchDistance < 5) {
+                    // Single touch event detected
+                    if (!cell.classList.contains("marked")) {
+                        cell.classList.add("marked");
+                        saveState();
+                    } else {
+                        cell.classList.remove("marked");
+                        saveState();
+                    }
+                } else {
+                    // Double touch event detected
+                    let word = cell.textContent;
+                    openModal("Bingo Wort", "Definition von " + word, "Button 1", "Button 2");
+                }
+            }
+        });
+    }
+}
+
 
 
 // Check if the device is a mobile device

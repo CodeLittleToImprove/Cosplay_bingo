@@ -1,8 +1,12 @@
-*{
+* {
 	box-sizing: border-box;
-	margin:0;
+	margin: 0;
 	padding: 0;
 }
+
+/* body {
+	touch-action: manipulation;
+} */
 
 table {
 	border-collapse: collapse;
@@ -66,7 +70,7 @@ button {
 @media (max-width: 480px) {
 	td {
 		height: 20%;
-		font-size: clamp(16px, 2.5vw, 22px) !important; 
+		font-size: clamp(16px, 2.5vw, 22px) !important;
 		/* reducing font size further for smaller screens */
 	}
 }
