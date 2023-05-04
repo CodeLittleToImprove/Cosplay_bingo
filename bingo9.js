@@ -23,7 +23,7 @@ const words = [
 	"computer",
 	"historian",
 	"investment",
-	"night",
+	"night life",
 	"writer",
 	"safety",
 	"pollution",
@@ -54,11 +54,18 @@ let modal = document.getElementById("myModal");
 let closeButton = document.querySelector(".close");
 
 // Funktion, um das Modal zu öffnen
-function openModal(title, text, button1Text, button2Text) {
+function openModal(title, text, button1Text, button2Text, link) {
 	document.getElementById("modal-title").textContent = title;
 	document.getElementById("modal-text").textContent = text;
 	document.getElementById("modal-button1").textContent = button1Text;
 	document.getElementById("modal-button2").textContent = button2Text;
+	let button2 = document.getElementById("modal-button2");
+	button2.textContent = button2Text;
+	if (link) {
+		button2.addEventListener("click", () => {
+			window.location.href = link;
+		});
+	}
 	modal.style.display = "block";
 }
 
@@ -86,7 +93,9 @@ for (let row of table.rows) {
         // Handle double click event
         cell.addEventListener("dblclick", () => {
             let word = cell.textContent;
-            openModal("Bingo Wort", "Definition von " + word, "Button 1", "Button 2");
+			let link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(word.replace(/\s/g, ""));
+			openModal("Bingo Wort", "Definition von " + word, "Button 1", "Button 2", link);
+			
         });
 
         // Handle touch events
