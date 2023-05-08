@@ -91,14 +91,16 @@ function closeModal() {
   
 function showExplanationModal() {
 	let explanationModal = document.getElementById("bingo-modal");
+	console.log("inShowExplanationmodal");
 	explanationModal.style.display = "block";
 }
 
 window.addEventListener("DOMContentLoaded", function () {
-	let explanationModalShown = localStorage.getItem("bingo-modal");
+	let explanationModalShown = localStorage.getItem("explanationModalShown");
 	if (!explanationModalShown) {
 		showExplanationModal();
 		localStorage.setItem("explanationModalShown", true);
+		console.log("auf true gesetzt");
 	}
 });
 
