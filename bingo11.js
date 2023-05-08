@@ -50,10 +50,25 @@ for (let row of table.rows) {
 	}
 }
 
+function copyToClipboard(text) {
+	// Create a temporary input element
+	let tempInput = document.createElement("textarea");
+	tempInput.value = text;
+	document.body.appendChild(tempInput);
+
+	// Select the text and copy it
+	tempInput.select();
+	document.execCommand("copy");
+
+	// Remove the temporary input element
+	document.body.removeChild(tempInput);
+}
+
 // Function, to open ContextModal 
 let modal = document.getElementById("context_Modal");
 let closeButton = document.querySelector(".close");
-function openContextModal(title, text, button1Text, button2Text, link) {
+
+function openContextModal(title, text, button1Text, button2Text, link, word) {
 	document.getElementById("modal-title").textContent = title;
 	document.getElementById("modal-text").textContent = text;
 	document.getElementById("modal-button1").textContent = button1Text;
@@ -65,6 +80,15 @@ function openContextModal(title, text, button1Text, button2Text, link) {
 			window.location.href = link;
 		});
 	}
+	// Add a click event listener to the first button
+	let button1 = document.getElementById("modal-button1");
+	button1.addEventListener("click", function () {
+		copyToClipboard("#" + word + "jd");
+		button1.style.backgroundColor = "red";
+		setTimeout(function () {
+			button1.style.backgroundColor = "";
+		}, 500);
+	});
 	modal.style.display = "block";
 }
 
@@ -86,23 +110,23 @@ closeButtons.forEach(function (closeButton) {
 function showTutorialModal() {
 	var tutorialModal = document.getElementById("tutorial-modal");
 	tutorialModal.style.display = "block";
-  
+
 	// Event-Listener, to close tutorial modal window
 	var tutorialModalCloseButton = document.getElementById("tutorial-modal-close");
 	tutorialModalCloseButton.addEventListener("click", function () {
-	  tutorialModal.style.display = "none";
-	  localStorage.setItem("tutorialModalShown", true);
+		tutorialModal.style.display = "none";
+		localStorage.setItem("tutorialModalShown", true);
 	});
-  }
-  
-  // When site is finished loaded, check if tutorial modal window already shown
-  window.addEventListener("DOMContentLoaded", function () {
+}
+
+// When site is finished loaded, check if tutorial modal window already shown
+window.addEventListener("DOMContentLoaded", function () {
 	var tutorialModalShown = localStorage.getItem("tutorialModalShown");
 	if (!tutorialModalShown) {
-	  showTutorialModal();
+		showTutorialModal();
 	}
-  });
-  
+});
+
 // Handle clicks on the cells
 for (let row of table.rows) {
 	for (let cell of row.cells) {
@@ -121,10 +145,18 @@ for (let row of table.rows) {
 
 		// Handle double click event
 		cell.addEventListener("dblclick", () => {
-			let word = cell.textContent;
-			let link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(word.replace(/\s/g, ""));
-			openContextModal("Bingo Word", "Hashtag from #" + word, "Button 1", "Button 2", link);
+			let word = cell.textContent.replace(/\s/g, '');
+			let link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(word.replace(/\s/g, "")) + "jd";
+			openContextModal(word, "Use this Hashtag on Instragram #" + word + "jd", "Copy hashtag to clipboard", "View this Hashtag on Instagram", link, word);
 
+			let button1 = document.getElementById("modal-button1");
+			button1.addEventListener("click", function () {
+				copyToClipboard("#" + word + "jd");
+				button1.style.backgroundColor = "red";
+				setTimeout(function () {
+					button1.style.backgroundColor = "";
+				}, 1000);
+			});
 		});
 
 		// Handle touch events
@@ -154,8 +186,19 @@ for (let row of table.rows) {
 					}
 				} else if (touchDistance < 100) { // erhöhter Schwellenwert für Double-Touch-Event
 					// Double touch event detected
-					let word = cell.textContent;
-					openContextModal("Bingo Word", "Hashtag from #" + word, "Button 1", "Button 2");
+					let word = cell.textContent.replace(/\s/g, '');
+					openContextModal(word, "Use this Hashtag on Instragram #" + word + "jd", "Copy hashtag to clipboard", "View this Hashtag on Instagram", link, word);
+
+					// Handle click events for modal buttons
+					let button1 = document.getElementById("modal-button1");
+					button1.addEventListener("click", function () {
+						copyToClipboard("#" + word + "jd");
+						button1.style.backgroundColor = "red";
+						setTimeout(function () {
+							button1.style.backgroundColor = "";
+						}, 1000);
+					});
+
 				}
 			}
 		});
