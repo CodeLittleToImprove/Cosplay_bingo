@@ -69,10 +69,55 @@ function openContextModal(title, text, button1Text, button2Text, link) {
 	modal.style.display = "block";
 }
 
-// Event-Listener, to close ContextModal
-closeButton.addEventListener("click", () => {
-	modal.style.display = "none";
+// // Event-Listener, to close ContextModal
+// closeButton.addEventListener("click", () => {
+// 	modal.style.display = "none";
+// });
+
+// Funktion zum Schließen des Modal-Fensters
+function closeModal() {
+	var modals = document.querySelectorAll('.modal');
+	modals.forEach(function(modal) {
+	  modal.style.display = 'none';
+	});
+  }
+  
+  // Event-Listener, to close Modal
+  var closeButtons = document.querySelectorAll('.close');
+  closeButtons.forEach(function(closeButton) {
+	closeButton.addEventListener('click', closeModal);
+  });
+
+  
+function showExplanationModal() {
+	let explanationModal = document.getElementById("bingo-modal");
+	explanationModal.style.display = "block";
+}
+
+window.addEventListener("DOMContentLoaded", function () {
+	let explanationModalShown = localStorage.getItem("bingo-modal");
+	if (!explanationModalShown) {
+		showExplanationModal();
+		localStorage.setItem("explanationModalShown", true);
+	}
 });
+
+// Prüfen, ob das Modal-Fenster bereits angezeigt wurde
+var bingoModalShown = localStorage.getItem('bingoModalShown');
+
+if (!bingoModalShown) {
+  // Modal-Fenster anzeigen
+  var bingoModal = document.getElementById('bingo-modal');
+  bingoModal.style.display = 'block';
+  
+  // Event-Listener für das Schließen des Modals hinzufügen
+  var bingoModalCloseButton = document.getElementById('bingo-modal-close');
+  bingoModalCloseButton.addEventListener('click', function() {
+    bingoModal.style.display = 'none';
+    localStorage.setItem('bingoModalShown', true);
+  });
+}
+
 
 // Handle clicks on the cells
 for (let row of table.rows) {
