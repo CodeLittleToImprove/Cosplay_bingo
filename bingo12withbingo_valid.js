@@ -50,6 +50,87 @@ for (let row of table.rows) {
 	}
 }
 
+function checkBingo() {
+	const rows = document.querySelectorAll("#bingo-board tr");
+	const cols = document.querySelectorAll("#bingo-board tr td");
+	const diagonals = [
+		[0, 6, 12, 18, 24],
+		[4, 8, 12, 16, 20]
+	];
+
+	let foundBingo = false;
+	for (let i = 0; i < rows.length; i++) {
+		if (rows[i].querySelectorAll(".marked").length === 5) {
+			rows[i].classList.add("bingo");
+			foundBingo = true;
+		}
+	}
+
+	for (let i = 0; i < cols.length; i++) {
+		if (cols[i].classList.contains("marked")) {
+			const colIndex = i % 5;
+			const markedCount = document.querySelectorAll(
+				`#bingo-board tr td:nth-child(${colIndex + 1}).marked`
+			).length;
+			if (markedCount === 5) {
+				for (let j = 0; j < rows.length; j++) {
+					rows[j].querySelector(`td:nth-child(${colIndex + 1})`).classList.add("bingo");
+				}
+				foundBingo = true;
+			}
+		}
+	}
+
+	for (let i = 0; i < diagonals.length; i++) {
+		const diagonal = diagonals[i];
+		const markedCount = diagonal.filter(
+			index => document.getElementById(`cell${index}`).classList.contains("marked")
+		).length;
+		if (markedCount === 5) {
+			diagonal.forEach(index => {
+				document.getElementById(`cell${index}`).classList.add("bingo");
+			});
+			foundBingo = true;
+		}
+	}
+
+	if (foundBingo) {
+		checkAllBingos();
+	}
+}
+
+// add comment
+function checkAllBingos() {
+	// Define all possible bingo combinations
+	const bingos = [
+		[0, 1, 2, 3, 4], // horizontal top
+		[5, 6, 7, 8, 9], // horizontal middle
+		[10, 11, 12, 13, 14], // horizontal bottom
+		[0, 5, 10, 15, 20], // vertical left
+		[1, 6, 11, 16, 21], // vertical middle
+		[2, 7, 12, 17, 22], // vertical right
+		[0, 6, 12, 18, 24], // diagonal top left to bottom right
+		[4, 8, 12, 16, 20] // diagonal top right to bottom left
+	];
+
+	// Check each bingo combination and mark it if found
+	bingos.forEach(bingo => {
+		let foundBingo = true;
+		bingo.forEach(index => {
+			let cell = document.getElementById(`cell${index}`);
+			if (!cell.classList.contains('marked')) {
+				foundBingo = false;
+			}
+		});
+		if (foundBingo) {
+			bingo.forEach(index => {
+				let cell = document.getElementById(`cell${index}`);
+				cell.classList.add('bingo');
+			});
+		}
+	});
+}
+
 function copyToClipboard(text) {
 	// Create a temporary input element
 	let tempInput = document.createElement("textarea");
@@ -156,6 +237,14 @@ for (let row of table.rows) {
 			if (!isMobileDevice()) {
 				cell.classList.toggle("marked");
 				saveState();
+
+				const cells = document.querySelectorAll('.bingo-cell');
+				cells.forEach((cell, index) => {
+					cell.id = `cell${index}`;
+				});
+
+				// Call the checkBingo function after marking a cell
+				checkBingo();;
 			}
 		});
 
@@ -196,6 +285,14 @@ for (let row of table.rows) {
 					if (!cell.classList.contains("marked")) {
 						cell.classList.add("marked");
 						saveState();
+
+						const cells = document.querySelectorAll('.bingo-cell');
+						cells.forEach((cell, index) => {
+							cell.id = `cell${index}`;
+						});
+
+						// Call the checkBingo function after marking a cell
+						checkBingo();;
 					} else {
 						cell.classList.remove("marked");
 						saveState();
@@ -262,6 +359,12 @@ loadState();
 // Handle click on reset button
 let resetBtn = document.getElementById("reset-button");
 resetBtn.addEventListener("click", () => {
+	// Remove the "marked" class from all cells
+	let cells = document.querySelectorAll(".bingo-cell");
+	cells.forEach((cell) => {
+		cell.classList.remove("marked");
+	});
+
 	// Generate a new array of unique random numbers
 	let newNumbers = [];
 	while (newNumbers.length < rows * cols) {
@@ -270,18 +373,20 @@ resetBtn.addEventListener("click", () => {
 			newNumbers.push(num);
 		}
 	}
+
 	// Fill the bingo board with the new generated words
 	let index = 0;
 	for (let row of table.rows) {
 		for (let cell of row.cells) {
 			cell.textContent = words[newNumbers[index]];
-			cell.classList.remove("marked");
 			index++;
 		}
 	}
+
 	// Save the new state
 	saveState();
 });
+
 
 
 /* Custom Function to adjust font size based on word length and cell height based on number of rows */

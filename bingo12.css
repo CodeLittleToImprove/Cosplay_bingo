@@ -40,6 +40,10 @@ td.marked {
 	color: #999;
 }
 
+td.bingo {
+	background-color: gold;
+}
+
 button {
 	display: block;
 	margin: 0 auto;
