@@ -106,6 +106,16 @@ closeButtons.forEach(function (closeButton) {
 	closeButton.addEventListener('click', closeModal);
 });
 
+// Event-Listener, to close any modal window when clicking outside of it
+window.addEventListener('click', function(event) {
+	var modals = document.querySelectorAll('.modal');
+	modals.forEach(function (modal) {
+	  if (event.target == modal) {
+		closeModal();
+	  }
+	});
+  });
+  
 // Function to show the tutorial modal window
 function showTutorialModal() {
 	var tutorialModal = document.getElementById("tutorial-modal");

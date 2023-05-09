@@ -1,42 +1,59 @@
-/* Das Modal */
+/* The Modal */
 .modal {
-	display: none; /* Versteckt das Modal standardmäßig */
-	position: fixed; /* Positioniert das Modal auf der Seite */
-	z-index: 1; /* Legt die Z-Reihenfolge fest, damit das Modal vor allem anderen angezeigt wird */
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto; /* Fügt einen Scrollbalken hinzu, wenn der Inhalt des Modals größer als das Fenster ist */
-	background-color: rgba(0,0,0,0.4); /* Verdunkelt den Hintergrund */
-  }
-  
-  /* Der Inhalt des Modals */
-  .modal-content {
-	background-color: #fefefe;
-	margin: auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 80%;
-	max-width: 600px;
-	position: absolute; /* Positioniert den Inhalt relativ zum Modal */
-	top: 50%; /* Setzt den oberen Rand auf die Hälfte der Höhe des Modals */
-	left: 50%; /* Setzt den linken Rand auf die Hälfte der Breite des Modals */
-	transform: translate(-50%, -50%); /* Zentriert den Inhalt des Modals */
-  }
-  
-  /* Schließtaste */
-  .close {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-  }
-  
+    display: none; /* Hide the modal by default */
+    position: fixed; /* Position the modal on the page */
+    z-index: 1; /* Make sure it is on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scrolling */
+    background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the modal box */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add a shadow */
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out; /* Add a transition effect */
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Add a background color and hover effect to all buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #3e8e41;
+}
