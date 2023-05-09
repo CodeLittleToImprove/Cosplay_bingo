@@ -1,0 +1,6 @@
+# .htaccess-Datei für Passwortschutz
+
+AuthType Basic
+AuthName "Geschützter Bereich - Bitte geben Sie ein Passwort ein!"
+AuthUserFile /opt/lampp/htdocs/bingo_test/.htpasswd
+Require valid-user
