@@ -18,21 +18,11 @@ $(".logocon").on('click touchstart', function () {
 	});
 });
 
-// old version
-
-if (/Mobi/.test(navigator.userAgent)) {
+  if (/Mobi/.test(navigator.userAgent) && navigator.languages.includes("de")) {
 	// Replace "scroll down" with "swipe up" in the hint text
-	document.getElementById("hint-text").innerHTML = "swipe up";
+	document.getElementById("hint-text").innerHTML = "Nach oben wischen";
+  } else if(/Mobi/.test(navigator.userAgent) && navigator.languages.includes("en")) {
+	// Replace "runter scrollen " with "scroll down" in the hint text
+	document.getElementById("hint-text").innerHTML = "scroll down";
   }
-
-document.addEventListener("DOMContentLoaded", function(event) {
-	// Hier den JavaScript-Code einfügen
-	if (/Mobi/.test(navigator.userAgent) && navigator.language === "en") {
-	  // Replace "scroll down" with "swipe up" in the hint text
-	  document.getElementById("hint-text").innerHTML = "swipe up";
-	} else if (/Mobi/.test(navigator.userAgent) && navigator.language === "de") {
-	  // Replace "scroll down" with "swipe up" in the hint text
-	  document.getElementById("hint-text").innerHTML = "Nach oben wischen";
-	}
-  });
   
