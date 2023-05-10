@@ -90,7 +90,7 @@ function openContextModal(title, text, button1Text, button2Text, link, word, lan
 	button2.textContent = button2Text;
 	if (link) {
 		button2.addEventListener("click", () => {
-			window.location.href = link;
+			window.open(link, '_blank');
 		});
 	}
 	// Add a click event listener to the first button
