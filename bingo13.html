@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, max-age=0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cosplay Bingo Board</title>
+
+	<link rel="stylesheet" href="bingo13.css">
+	<link rel="stylesheet" href="modal.css">
+	<script src="bingo13.js" defer></script>
+</head>
+
+<!-- Tabindex="-1" is needed for disabling touch to search -->
+
+<body>
+	<div id="tutorial-modal" class="modal">
+		<div class="modal-content">
+			<span id="tutorial-modal-close" class="close">&times;</span>
+			<h2>How this website works</h2>
+			<p>Single Tap on a bingo field: This marks the field as selected.</p>
+			<p>Double Tap on a bingo field: This opens a menu with options to copy the specific and general hash tag to your clipboard or
+				view pictures that have been submitted using that specific hash tag. </p>
+		</div>
+	</div>
+	<div class="table-wrap" tabindex="-1">
+		<table id="bingo-board" lang="en">
+			<tr>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+			</tr>
+			<tr>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+			</tr>
+			<tr>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+			</tr>
+			<tr>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+			</tr>
+			<tr>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+				<td class="bingo-cell"></td>
+			</tr>
+		</table>
+		<button id="reset-button">Reset</button>
+		<button id="tutorial-button">Help</button>
+	</div>
+	<div id="context_Modal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2 id="modal-title">Placeholder</h2>
+			<p id="modal-text">Placeholder Inhalt</p>
+			<button id="modal-button1">Button1 Name Placeholder</button>
+			<button id="modal-button2">Button2 Name Placeholder</button>
+		</div>
+	</div>
+</body>
+
+</html>
