@@ -1,14 +1,14 @@
-// let language;
-// if (navigator.languages.includes("de"))
-// {
-// 	language = "de";
-// }
-// else
-// {
-// 	language = "en";
-// }
+let language;
+if (navigator.languages.includes("de") || navigator.languages.includes("de-DE")) {
+	console.log("deutsch");
+	language = "de";
+}
+else {
+	console.log("english");
+	language = "en";
+}
 
-let language = "de";
+// let language = "de";
 // Define the size of the bingo board
 const rows = 5;
 const cols = 5;
@@ -150,11 +150,30 @@ window.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
-
+// Open Tutorial Modal via helper Button 
 const helperButton = document.getElementById("tutorial-button");
 helperButton.addEventListener("click", () => {
 	showTutorialModal();;
 });
+
+function handleHashtagGeneration(cell) {
+	let word = cell.textContent.trim();
+	let lang = language === "de" ? "de" : "en";
+	let index = words.findIndex(w => w[lang] === word);
+	let hashtag = words[index].en;
+	let link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(hashtag) + "jd";
+	openContextModal(hashtag, "Use this Hashtag on Instagram #" + hashtag + "jd", "Copy hashtag to clipboard", "View this Hashtag on Instagram", link, word);
+
+	// Handle click events for modal buttons
+	let button1 = document.getElementById("modal-button1");
+	button1.addEventListener("click", function () {
+		copyToClipboard("#" + hashtag + "jd");
+		button1.style.backgroundColor = "red";
+		setTimeout(function () {
+			button1.style.backgroundColor = "";
+		}, 1000);
+	});
+}
 
 // Handle clicks on the cells
 for (let row of table.rows) {
@@ -174,24 +193,7 @@ for (let row of table.rows) {
 
 		// Handle double click event
 		cell.addEventListener("dblclick", () => {
-			let word = cell.textContent.trim();
-			let lang = language === "de" ? "de" : "en";
-			console.log(lang);
-			let index = words.findIndex(w => w[lang] === word);
-			console.log(index);
-			let hashtag = words[index].en;
-			let link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(hashtag) + "jd";
-			openContextModal(hashtag, "Use this Hashtag on Instagram #" + hashtag + "jd", "Copy hashtag to clipboard", "View this Hashtag on Instagram", link, word);
-
-			// Handle click events for modal buttons
-			let button1 = document.getElementById("modal-button1");
-			button1.addEventListener("click", function () {
-				copyToClipboard("#" + hashtag + "jd");
-				button1.style.backgroundColor = "red";
-				setTimeout(function () {
-					button1.style.backgroundColor = "";
-				}, 1000);
-			});
+			handleHashtagGeneration(cell);
 		});
 
 		// Handle touch events
@@ -221,24 +223,7 @@ for (let row of table.rows) {
 					}
 				} else if (touchDistance < 100) { // erhöhter Schwellenwert für Double-Touch-Event
 					// Double touch event detected
-					let word = cell.textContent.trim();
-					let lang = language === "de" ? "de" : "en";
-					console.log(lang);
-					let index = words.findIndex(w => w[lang] === word);
-					console.log(index);
-					let hashtag = words[index].en;
-					let link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(hashtag) + "jd";
-					openContextModal(hashtag, "Use this Hashtag on Instagram #" + hashtag + "jd", "Copy hashtag to clipboard", "View this Hashtag on Instagram", link, word);
-
-					// Handle click events for modal buttons
-					let button1 = document.getElementById("modal-button1");
-					button1.addEventListener("click", function () {
-						copyToClipboard("#" + hashtag + "jd");
-						button1.style.backgroundColor = "red";
-						setTimeout(function () {
-							button1.style.backgroundColor = "";
-						}, 1000);
-					});
+					handleHashtagGeneration(cell);
 				}
 			}
 		});
