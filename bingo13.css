@@ -64,8 +64,12 @@ button {
 	gap: 16px;
 }
 
-.nowrap {
+.modal-buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	flex-wrap: nowrap;
+	gap: 16px;
 }
 
 @media (max-width: 1080px) {
@@ -81,7 +85,12 @@ button {
 		font-size: 3vw;
 		/* reducing font size for smaller screens */
 	}
-	
+	.modal-buttons {
+		flex-direction: column;
+	}
+	.modal-buttons button {
+		width: 100%;
+	}
 }
 
 @media (max-width: 480px) {

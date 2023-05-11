@@ -27,6 +27,9 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add a shadow */
 }
 
+.modal-content p {
+	margin-bottom: 16px;
+}
 /* Close Button */
 .close {
     color: #aaa;

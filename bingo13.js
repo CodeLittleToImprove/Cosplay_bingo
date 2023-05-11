@@ -8,7 +8,7 @@
 // 	language = "en";
 // }
 
-let language = "de";
+let language = "en";
 let link;
 // Define the size of the bingo board
 const rows = 5;
