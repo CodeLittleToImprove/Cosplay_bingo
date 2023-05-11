@@ -93,7 +93,6 @@ function handleButton2Click() {
 	window.open(url, '_blank');
 }
 
-
 button2.addEventListener("click", () => handleButton2Click());
 
 
@@ -181,7 +180,7 @@ function handleHashtagGeneration(cell) {
 	}
 
 
-	// // Handle click events for modal buttons
+	// // Handle click events for modal buttons old
 	// let button1 = document.getElementById("modal-button1");
 	// button1.addEventListener("click", function () {
 	// 	copyToClipboard("#" + hashtag + "jd");
