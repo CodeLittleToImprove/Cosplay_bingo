@@ -18,11 +18,12 @@ $(".logocon").on('click touchstart', function () {
 	});
 });
 
-  if (/Mobi/.test(navigator.userAgent) && navigator.languages.includes("de")) {
+if (/Mobi/.test(navigator.userAgent) && navigator.languages.includes("de") || navigator.languages.includes("de-DE")) {
 	// Replace "scroll down" with "swipe up" in the hint text
 	document.getElementById("hint-text").innerHTML = "Hier Dr&uuml;cken";
-  } else if(/Mobi/.test(navigator.userAgent) && navigator.languages.includes("en")) {
+	// console.log("deutsch und mobil");
+} else if (/Mobi/.test(navigator.userAgent) && navigator.languages.includes("en") || navigator.languages.includes("en-en")) {
 	// Replace "runter scrollen " with "scroll down" in the hint text
 	document.getElementById("hint-text").innerHTML = "Press Here";
-  }
-  
+	// console.log("english and mobil");
+}
