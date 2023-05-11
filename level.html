@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, max-age=0">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Ultimate Cosplay Bingo by Kunel</title>
+	<title>Cosplay Bingo Level Selection</title>
 	<style>
 		/* Den Inhalt der Webseite verbergen */
 		body {
@@ -20,7 +20,7 @@
 	
 		  // HTML-Datei basierend auf der Browsersprache laden
 		  if (userLang === "de-DE") {
-			window.location.href = "index_german.html";
+			window.location.href = "level_german.html";
 		  } else {
 			// window.location.href = "index.html";
 			document.body.style.visibility = "visible";
@@ -28,28 +28,26 @@
 		});
 	  </script>
 	<base href="index.html">
-	<link href='https://fonts.googleapis.com/css?family=Comfortaa:400,300' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="./scripts/language_script.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-	<link rel="stylesheet" href="./css/index_style.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+	<link rel="stylesheet" href="./css/level_style.css">
 </head>
 
 <body>
 	<!-- partial:index.partial.html -->
-	<!--cover w/ skrollr values (for example data-100 for styles at 100 pixels scroled)-->
-	<div class="logocon" data-0="opacity: 1; display: flex" data-99="opacity: 0; display: none"
-		data-100="display: none">
-		<div class="logo">Are you ready for the ultimate Cosplay Bingo :O?</div>
+	<div class="container">
+		<div class="one-half left">
+			<h1>MAINSTREAM LEVEL</h1>
+			<a href="#" class="cta">Let's Play</a>
+		</div>
+		<div class="one-half right">
+			<h1>WEEB LEVEL</h1>
+			<a href="#" class="cta">Let's Play</a>
+		</div>
 	</div>
-	<div class="hint" data-0="bottom: 10vh" data-100="bottom: -25px" id="hint-text">scroll down</div>
-	<!--page contents below-->
-
 	<!-- partial -->
 	<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/skrollr/0.6.26/skrollr.min.js'></script>
-	<script src="./scripts/index_script.js"></script>
+	<script src="./scripts/page2_script.js"></script>
 
 </body>
 
