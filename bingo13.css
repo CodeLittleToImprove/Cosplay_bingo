@@ -46,7 +46,6 @@ td.bingo {
 
 button {
 	display: block;
-	/* margin: 0 auto; */
 	font-size: 18px;
 	padding: 10px 20px;
 	background-color: #1abc9c;
@@ -85,9 +84,11 @@ button {
 		font-size: 3vw;
 		/* reducing font size for smaller screens */
 	}
+
 	.modal-buttons {
 		flex-direction: column;
 	}
+
 	.modal-buttons button {
 		width: 100%;
 	}
