@@ -46,7 +46,7 @@ td.bingo {
 
 button {
 	display: block;
-	margin: 0 auto;
+	/* margin: 0 auto; */
 	font-size: 18px;
 	padding: 10px 20px;
 	background-color: #1abc9c;
@@ -54,6 +54,18 @@ button {
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
+}
+
+.all-buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.nowrap {
+	flex-wrap: nowrap;
 }
 
 @media (max-width: 1080px) {
@@ -69,6 +81,7 @@ button {
 		font-size: 3vw;
 		/* reducing font size for smaller screens */
 	}
+	
 }
 
 @media (max-width: 480px) {

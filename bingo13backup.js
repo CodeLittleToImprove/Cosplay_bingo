@@ -8,8 +8,7 @@
 // 	language = "en";
 // }
 
-let language = "de";
-let link;
+let language = "en";
 // Define the size of the bingo board
 const rows = 5;
 const cols = 5;
@@ -82,27 +81,47 @@ function copyToClipboard(text) {
 let modal = document.getElementById("context_Modal");
 let closeButton = document.querySelector(".close");
 
-const button2 = document.getElementById("modal-button2");
+// if (link) {
+// 	button2.addEventListener("click", () => {
+// 	  const message = language === "en" ? "Do you really want to be redirected to the Instagram?" : "Möchten Sie wirklich auf Instagram weitergeleitet werden?";
+// 	  if (confirm(message)) {
+// 		window.open(link, '_blank');
+// 	  }
 
-function handleButton2Click() {
-	console.log("test");
-	const url = button2.dataset.url;
-	if (!url) {
-		return;
-	}
-	window.open(url, '_blank');
+function handleButton2Click(link) {
+	console.log(link + " in handleButton");
+	window.open(link, '_blank');
 }
 
 
-button2.addEventListener("click", () => handleButton2Click());
-
-
-function openContextModal(title, text, button1Text, button2Text, url, word, lang) {
+function openContextModal(title, text, button1Text, button2Text, link, word, lang) {
+	console.log("called openContextModal");
 	document.getElementById("modal-title").textContent = title;
 	document.getElementById("modal-text").textContent = text;
 	document.getElementById("modal-button1").textContent = button1Text;
+	document.getElementById("modal-button2").textContent = button2Text;
+	let button2 = document.getElementById("modal-button2");
 	button2.textContent = button2Text;
-	button2.dataset.url = url;
+
+	let button2ClickHandler = function () {
+		console.log(link + " in handleButton");
+		window.open(link, "_blank");
+	};
+
+	button2.removeEventListener("click", button2ClickHandler);
+	button2.addEventListener("click", button2ClickHandler);
+	console.log(link + " in opencontextmondal");
+	// if (link) {
+	// 	// button2.removeEventListener('click', handleButton2Click);
+	// 	// console.log(link + " in if from opencontextmondal");
+	// 	button2.addEventListener("click", () => handleButton2Click(link));
+	// }
+
+	// let isButton2ClickListenerAdded = false;
+	// if (link && !isButton2ClickListenerAdded) {
+	// 	button2.addEventListener("click", () => handleButton2Click(link));
+	// 	isButton2ClickListenerAdded = true;
+	// }
 
 	// Add a click event listener to the first button
 	let button1 = document.getElementById("modal-button1");
@@ -172,8 +191,9 @@ function handleHashtagGeneration(cell) {
 	let lang = language === "de" ? "de" : "en";
 	let index = words.findIndex(w => w[lang] === word);
 	let hashtag = words[index].en;
-	link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(hashtag) + "jd";
-	openContextModal(hashtag, "Use this Hashtag on Instagram #" + hashtag + "jd", "Copy hashtag to clipboard", "View this Hashtag on Instagram", link, word);
+	let link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(hashtag) + "jd";
+	console.log(link + " in handleHashtag");
+	openContextModal(word, "Use this Hashtag on Instagram #" + hashtag + "jd", "Copy hashtag to clipboard", "View this Hashtag on Instagram", link, word, lang);
 
 	// Handle click events for modal buttons
 	let button1 = document.getElementById("modal-button1");
@@ -184,7 +204,18 @@ function handleHashtagGeneration(cell) {
 			button1.style.backgroundColor = "";
 		}, 1000);
 	});
+
+	// let button2 = document.getElementById("modal-button2");
+	// let button2ClickHandler = () => {
+	//   if (link) {
+	// 	console.log(link + "in handleHashtag");
+	// 	window.open(link, "_blank");
+	//   }
+	// };
+	// button2.removeEventListener("click", button2ClickHandler);
+	// button2.addEventListener("click", button2ClickHandler);
 }
+
 
 // Handle clicks on the cells
 for (let row of table.rows) {
@@ -205,6 +236,7 @@ for (let row of table.rows) {
 		// Handle double click event
 		cell.addEventListener("dblclick", () => {
 			handleHashtagGeneration(cell);
+			console.log("handleHashtagGeneration wurde aufgerufen")
 		});
 
 		// Handle touch events
