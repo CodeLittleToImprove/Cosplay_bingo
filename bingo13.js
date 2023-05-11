@@ -1,14 +1,14 @@
-let language;
-if (navigator.languages.includes("de") || navigator.languages.includes("de-DE")) {
-	// console.log("deutsch");
-	language = "de";
-}
-else {
-	// console.log("english");
-	language = "en";
-}
+// let language;
+// if (navigator.languages.includes("de") || navigator.languages.includes("de-DE")) {
+// 	// console.log("deutsch");
+// 	language = "de";
+// }
+// else {
+// 	// console.log("english");
+// 	language = "en";
+// }
 
-// let language = "en";
+let language = "en";
 let link;
 // Define the size of the bingo board
 const rows = 5;
@@ -170,7 +170,7 @@ function handleHashtagGeneration(cell) {
 	let lang = language === "de" ? "de" : "en";
 	let index = words.findIndex(w => w[lang] === word);
 	let hashtag = words[index].en;
-	link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(hashtag) + "jd";
+	link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(hashtag.replace(/\s+/g, "")) + "jd";
 	switch (lang) {
 		case 'de':
 			openContextModal(hashtag, "Verwenden Sie diesen Hashtag auf Instagram #" + hashtag + "jd", "Hashtags in die Zwischenablage kopieren", "Diesen Hashtag auf Instagram ansehen", link, word);
@@ -193,7 +193,7 @@ function handleHashtagGeneration(cell) {
 	// Add a click event listener to the first button
 	let button1 = document.getElementById("modal-button1");
 	button1.addEventListener("click", function () {
-		let textToCopy = "#" + hashtag + "jd #" + "cosplaybingojapanday";
+		let textToCopy = "#" + hashtag.replace(/\s+/g, "") + "jd #" + "cosplaybingojapanday";
 		copyToClipboard(textToCopy);
 		console.log(textToCopy);
 		button1.style.backgroundColor = "red";
