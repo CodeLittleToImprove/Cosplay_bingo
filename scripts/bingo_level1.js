@@ -105,7 +105,7 @@ function openContextModal(title, text, button1Text, button2Text, url, word, lang
 	// // Add a click event listener to the first button
 	// let button1 = document.getElementById("modal-button1");
 	// button1.addEventListener("click", function () {
-	// 	copyToClipboard("#" + word + "jd");
+	// 	copyToClipboard("#" + word + "JD");
 	// 	button1.style.backgroundColor = "red";
 	// 	setTimeout(function () {
 	// 		button1.style.backgroundColor = "";
@@ -170,20 +170,20 @@ function handleHashtagGeneration(cell) {
 	let lang = language === "de" ? "de" : "en";
 	let index = words.findIndex(w => w[lang] === word);
 	let hashtag = words[index].en;
-	link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(hashtag.replace(/\s+/g, "")) + "jd";
+	link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(hashtag.replace(/\s+/g, "")) + "JD";
 	switch (lang) {
 		case 'de':
-			openContextModal(hashtag, "Verwenden Sie diesen Hashtag auf Instagram #" + hashtag.replace(/\s+/g, "") + "jd", "Hashtags in die Zwischenablage kopieren", "Diesen Hashtag auf Instagram ansehen", link, word);
+			openContextModal(hashtag, "Verwenden Sie diesen Hashtag auf Instagram #" + hashtag.replace(/\s+/g, "") + "JD", "Hashtags in die Zwischenablage kopieren", "Diesen Hashtag auf Instagram ansehen", link, word);
 			break;
 		default:
-			openContextModal(hashtag, "Use this Hashtag on Instagram #" + hashtag.replace(/\s+/g, "") + "jd", "Copy hashtags to clipboard", "View this Hashtag on Instagram", link, word);
+			openContextModal(hashtag, "Use this Hashtag on Instagram #" + hashtag.replace(/\s+/g, "") + "JD", "Copy hashtags to clipboard", "View this Hashtag on Instagram", link, word);
 	}
 
 
 	// // Handle click events for modal buttons old
 	// let button1 = document.getElementById("modal-button1");
 	// button1.addEventListener("click", function () {
-	// 	copyToClipboard("#" + hashtag + "jd");
+	// 	copyToClipboard("#" + hashtag + "JD");
 	// 	button1.style.backgroundColor = "red";
 	// 	setTimeout(function () {
 	// 		button1.style.backgroundColor = "";
@@ -193,7 +193,7 @@ function handleHashtagGeneration(cell) {
 	// Add a click event listener to the first button
 	let button1 = document.getElementById("modal-button1");
 	button1.addEventListener("click", function () {
-		let textToCopy = "#" + hashtag.replace(/\s+/g, "") + "jd #" + "cosplaybingojapanday";
+		let textToCopy = "#" + hashtag.replace(/\s+/g, "") + "JD #" + "cosplaybingojapanday";
 		copyToClipboard(textToCopy);
 		console.log(textToCopy);
 		button1.style.backgroundColor = "red";
