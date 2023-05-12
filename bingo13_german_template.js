@@ -15,33 +15,32 @@ const rows = 5;
 const cols = 5;
 
 const words = [
-	{ de: "Natur", en: "nature" },
-	{ de: "Zeichnung", en: "drawing" },
-	{ de: "Länge", en: "length" },
-	{ de: "Inspektor", en: "inspector" },
-	{ de: "Aufregung", en: "excitement" },
-	{ de: "Anweisung", en: "instruction" },
-	{ de: "Beispiel", en: "sample" },
-	{ de: "Kontrolle", en: "control" },
-	{ de: "Mitgliedschaft", en: "membership" },
-	{ de: "Kühlschrank", en: "refrigerator" },
-	{ de: "Komitee", en: "committee" },
-	{ de: "Chirurgie", en: "surgery" },
-	{ de: "Verhandlung", en: "negotiation" },
-	{ de: "Ziel", en: "goal" },
-	{ de: "Ort", en: "location" },
-	{ de: "Definition von miau miau miau meo miau", en: "definition of meoww meow meow meo meow" },
-	{ de: "Computer", en: "computer" },
-	{ de: "Historiker", en: "historian" },
-	{ de: "Investition", en: "investment" },
-	{ de: "Nachtleben", en: "night life" },
-	{ de: "Autor", en: "writer" },
-	{ de: "Sicherheit", en: "safety" },
-	{ de: "Verschmutzung", en: "pollution" },
-	{ de: "Jahr", en: "year" },
-	{ de: "Danke", en: "thanks" }
+	{ de: "Oldschool Anime Character", en: "old-school anime character" },
+	{ de: "Computergenerierte Stimme", en: "computer-generated voice" },
+	{ de: "Dein Lieblingscharakter ", en: "your favorite character" },
+	{ de: "Hintergrundcharakter", en: "background character" },
+	{ de: "Geschlechtertausch", en: "genderswap" },
+	{ de: "Gruppencosplay", en: "group-cosplay " },
+	{ de: "Toter Charakter", en: "dead Character" },
+	{ de: "Eltern Rip", en: "parents rip" },
+	{ de: "Wem ist sicher kalt", en: "someone who is definitely cold" },
+	{ de: "Charakter den du nicht kennst", en: "a characer that you dont know" },
+	{ de: "Flauschig", en: "fluffy" },
+	{ de: "Kawaii", en: "kawaii" },
+	{ de: "Wem ist sicher warm", en: "someone who is definitely warm" },
+	{ de: "Physikalisch unmögliche Haare", en: "physical impossible hair" },
+	{ de: "Gender Fragezeichen", en: "What's your Gender" },
+	{ de: "Zeitreisender", en: "timetraveller" },
+	{ de: "Anime dass dich zum weinen gebracht hat", en: "anime that made you cry" },
+	{ de: "Dein Anime Schwarm", en: "your anime crush" },
+	{ de: "Cosplay Zwilling oder gleiches Shirt ", en: "cosplay twin or same shirt" },
+	{ de: "Cosplayer mit Kontaktlinsen", en: "cosplayer with contact lenses" },
+	{ de: "Cyberpunk Edgerunner", en: "Cyberpunk Edgerunner" },
+	{ de: "Marin Kitagawa", en: "Marin Kitagawa" },
+	{ de: "Satoru Gojo", en: "Satoru Gojo" },
+	{ de: "Aufwendiges Cosplay", en: "High effort Cosplay" },
+	{ de: "Spy X Family", en: "Spy X Family" }
 ];
-
 
 // Generate an array of unique random numbers
 let numbers = [];
