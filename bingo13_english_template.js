@@ -39,7 +39,7 @@ const words = [
 	{ de: "Dein Lieblingscharakter", en: "your Favorite character" },
 	{ de: "Anime with at least one movie", en: "anime with at least one movie" },
 	{ de: "Charakter der in Memes benutzt wird", en: "character which is used in a meme" },
-	{ de: "Spy X Family", en: "Spy X Family" }
+	{ de: "Charakter der an einem Turnier Arc teilnimmt", en: "character who participates in a tournament arc" }
 ];
 
 // Generate an array of unique random numbers
