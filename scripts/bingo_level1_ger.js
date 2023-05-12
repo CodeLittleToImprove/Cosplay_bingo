@@ -24,7 +24,7 @@ const words = [
 	{ de: "Toter Charakter", en: "dead Character" },
 	{ de: "Eltern Rip", en: "parents rip" },
 	{ de: "Wem ist sicher kalt", en: "someone who is definitely cold" },
-	{ de: "Charakter den du nicht kennst", en: "a characer that you dont know" },
+	{ de: "Charakter den du nicht kennst", en: "a character that you dont know" },
 	{ de: "Flauschig", en: "fluffy" },
 	{ de: "Kawaii", en: "kawaii" },
 	{ de: "Wem ist sicher warm", en: "someone who is definitely warm" },
