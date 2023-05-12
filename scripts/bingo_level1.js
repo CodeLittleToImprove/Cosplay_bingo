@@ -16,15 +16,15 @@ const cols = 5;
 
 const words = [
 	{ de: "Oldschool Anime Character", en: "old-school anime character" },
-	{ de: "Computergenerierte Stimme", en: "computer-generated voice" },
+	{ de: "Computergenerierte Stimme", en: "computer generated voice" },
 	{ de: "Dein Lieblingscharakter ", en: "your favorite character" },
 	{ de: "Hintergrundcharakter", en: "background character" },
 	{ de: "Geschlechtertausch", en: "genderswap" },
-	{ de: "Gruppencosplay", en: "group-cosplay " },
+	{ de: "Gruppencosplay", en: "group cosplay " },
 	{ de: "Toter Charakter", en: "dead Character" },
 	{ de: "Eltern Rip", en: "parents rip" },
 	{ de: "Wem ist sicher kalt", en: "someone who is definitely cold" },
-	{ de: "Charakter den du nicht kennst", en: "a characer that you dont know" },
+	{ de: "Charakter den du nicht kennst", en: "a character that you dont know" },
 	{ de: "Flauschig", en: "fluffy" },
 	{ de: "Kawaii", en: "kawaii" },
 	{ de: "Wem ist sicher warm", en: "someone who is definitely warm" },

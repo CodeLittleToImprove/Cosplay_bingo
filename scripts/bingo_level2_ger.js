@@ -23,7 +23,7 @@ const words = [
 	{ de: "Anime mit mehr als 100 Episoden", en: "anime with more 100 episodes" },
 	{ de: "Cosplay von einem zukünftigen Anime", en: "cosplay from upcoming anime" },
 	{ de: "Anime dessen Studio gewechselt hat", en: "anime that changed studios" },
-	{ de: "Non Default Kostüm", en: "non-default Skin Cosplay" },
+	{ de: "Non Default Kostüm", en: "non default Skin Cosplay" },
 	{ de: "Kouhai und Senpai in Szene", en: "kouhai and senpai posing" },
 	{ de: "Anime der ein Remake hat", en: "anime with a remake" },
 	{ de: "Kyotoani  Charakter", en: "kyoto Ani character" },
