@@ -17,12 +17,14 @@
 		document.addEventListener("DOMContentLoaded", function(event) {
 		  // Browsersprache abrufen
 		  var userLang = navigator.language || navigator.userLanguage;
-	
+		console.log(userLang)
 		  // HTML-Datei basierend auf der Browsersprache laden
 		  if (userLang === "de-DE") {
+			// console.log("de");
 			window.location.href = "index_german.html";
 		  } else {
 			// window.location.href = "index.html";
+			// console.log("en");
 			document.body.style.visibility = "visible";
 		  }
 		});
@@ -43,7 +45,7 @@
 		data-100="display: none">
 		<div class="logo">Are you ready for the ultimate Cosplay Bingo :O?</div>
 	</div>
-	<div class="hint" data-0="bottom: 10vh" data-100="bottom: -25px" id="hint-text">Swipe up</div>
+	<div class="hint" data-0="bottom: 10vh" data-100="bottom: -25px" id="hint-text">swipe up</div>
 	<!--page contents below-->
 
 	<!-- partial -->
