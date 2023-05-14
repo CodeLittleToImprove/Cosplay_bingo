@@ -37,7 +37,7 @@ const words = [
 	{ de: "Verräter", en: "traitor" },
 	{ de: "Charakter der einen Bodysuit trägt", en: "character who wears body suit" },
 	{ de: "Dein Lieblingscharakter", en: "your favorite character" },
-	{ de: "Anime with at least one movie", en: "anime with at least one movie" },
+	{ de: "Anime mit mindestens einen Film", en: "anime with at least one movie" },
 	{ de: "Charakter der in Memes benutzt wird", en: "character which is used in a meme" },
 	{ de: "Charakter der an einem Turnier Arc teilnimmt", en: "character who participates in a tournament arc" }
 ];
