@@ -17,7 +17,7 @@ const cols = 5;
 const words = [
 	{ de: "Oldschool Anime Charakter", en: "old-school anime character" },
 	{ de: "Computergenerierte Stimme", en: "computer generated voice" },
-	{ de: "Dein Lieblingscharakter ", en: "your favorite character" },
+	{ de: "Dein Lieblingscharakter", en: "your favorite character" },
 	{ de: "Hintergrundcharakter", en: "background character" },
 	{ de: "Geschlechtertausch", en: "genderswap" },
 	{ de: "Gruppencosplay", en: "group cosplay " },
@@ -33,7 +33,7 @@ const words = [
 	{ de: "Zeitreisender", en: "timetraveller" },
 	{ de: "Anime dass dich zum weinen gebracht hat", en: "anime that made you cry" },
 	{ de: "Dein Anime Schwarm", en: "your anime crush" },
-	{ de: "Cosplay Zwilling oder gleiches Shirt ", en: "cosplay twin or same shirt" },
+	{ de: "Cosplay Zwilling oder gleiches Shirt", en: "cosplay twin or same shirt" },
 	{ de: "Cosplayer mit Kontaktlinsen", en: "cosplayer with contact lenses" },
 	{ de: "Cyberpunk Edgerunner", en: "Cyberpunk Edgerunner" },
 	{ de: "Bocchi the rock", en: "Bocchi the rock" },
