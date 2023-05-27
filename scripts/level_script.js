@@ -12,3 +12,12 @@ $r.mouseenter(function() {
 }).mouseleave(function() {
   $('.container').removeClass('right-is-hovered');
 });
+
+
+window.addEventListener('unload', function() {
+  // Leere den localStorage
+  localStorage.clear();
+  console.log("popstate triggert");
+  // Leere den sessionStorage
+  sessionStorage.clear();
+});
