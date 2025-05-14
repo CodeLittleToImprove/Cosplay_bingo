@@ -1,22 +1,27 @@
+/* global skrollr */
+
 skrollr.init();
 
-var scrolled = false;
+function goToLevelPage()
+{
+    $("html, body").animate({scrollTop: 100}, 1000, function ()
+    {
+        window.location.replace("level.html");
+    });
+}
 
-$(window).on('scroll touchmove', function () {
-	var scrollPos = $(window).scrollTop();
-	if (scrollPos >= 100 && !scrolled) {
-		$("html, body").animate({ scrollTop: 100 }, 1000, function () {
-			window.location.replace("level.html");
-		});
-		scrolled = true;
-	}
+let scrolled = false;
+
+$(window).on('scroll touchmove', function ()
+{
+    if ($(window).scrollTop() >= 100 && !scrolled)
+    {
+        goToLevelPage();
+        scrolled = true;
+    }
 });
 
-$(".logocon").on('click touchstart', function () {
-	$("html, body").animate({ scrollTop: 100 }, 1000, function () {
-		window.location.replace("level.html");
-	});
-});
+$(".logocon").on('click touchstart', goToLevelPage);
 
 // if (/Mobi/.test(navigator.userAgent) && navigator.languages.includes("de") || navigator.languages.includes("de-DE")) {
 // 	// Replace "scroll down" with "swipe up" in the hint text
