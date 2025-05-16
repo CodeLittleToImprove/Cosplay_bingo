@@ -1,352 +1,318 @@
-// let language;
-// if (navigator.languages.includes("de") || navigator.languages.includes("de-DE")) {
-// 	// console.log("deutsch");
-// 	language = "de";
-// }
-// else {
-// 	// console.log("english");
-// 	language = "en";
-// }
+// ========== Constants ==========
+const ROWS = 5;
+const COLS = 5;
+const eventName = "JAPANTAG2025"
 
-  
-let language = "en";
-let link;
-// Define the size of the bingo board
-const rows = 5;
-const cols = 5;
-
-const words = [
-	{ de: "Oldschool Anime Charakter", en: "old-school anime character" },
-	{ de: "Computergenerierte Stimme", en: "computer generated voice" },
-	{ de: "Dein Lieblingscharakter", en: "your favorite character" },
-	{ de: "Hintergrundcharakter", en: "background character" },
-	{ de: "Geschlechtertausch", en: "genderswap" },
-	{ de: "Gruppencosplay", en: "group cosplay " },
-	{ de: "Toter Charakter", en: "dead character" },
-	{ de: "Eltern Rip", en: "parents rip" },
-	{ de: "Wem ist sicher kalt", en: "someone who is definitely cold" },
-	{ de: "Charakter den du nicht kennst", en: "a character that you dont know" },
-	{ de: "Flauschig", en: "fluffy" },
-	{ de: "Kawaii", en: "kawaii" },
-	{ de: "Wem ist sicher warm", en: "someone who is definitely warm" },
-	{ de: "Physikalisch unmögliche Haare", en: "physical impossible hair" },
-	{ de: "Gender Fragezeichen", en: "What is your Gender" },
-	{ de: "Zeitreisender", en: "timetraveller" },
-	{ de: "Anime dass dich zum weinen gebracht hat", en: "anime that made you cry" },
-	{ de: "Dein Anime Schwarm", en: "your anime crush" },
-	{ de: "Cosplay Zwilling oder gleiches Shirt", en: "cosplay twin or same shirt" },
-	{ de: "Cosplayer mit Kontaktlinsen", en: "cosplayer with contact lenses" },
-	{ de: "Cyberpunk Edgerunner", en: "Cyberpunk Edgerunner" },
-	{ de: "Bocchi the rock", en: "Bocchi the rock" },
-	{ de: "Satoru Gojo", en: "Satoru Gojo" },
-	{ de: "Aufwendiges Cosplay", en: "High effort Cosplay" },
-	{ de: "Spy X Family", en: "Spy X Family" }
+const WORDS = [
+    {de: "Oldschool Anime Charakter", en: "old-school anime character"},
+    {de: "Computergenerierte Stimme", en: "computer generated voice"},
+    {de: "Dein Lieblingscharakter", en: "your favorite character"},
+    {de: "Hintergrundcharakter", en: "background character"},
+    {de: "Geschlechtertausch", en: "genderswap"},
+    {de: "Gruppencosplay", en: "group cosplay "},
+    {de: "Toter Charakter", en: "dead character"},
+    {de: "Eltern Rip", en: "parents rip"},
+    {de: "Wem ist sicher kalt", en: "someone who is definitely cold"},
+    {de: "Charakter den du nicht kennst", en: "a character that you dont know"},
+    {de: "Flauschig", en: "fluffy"},
+    {de: "Kawaii", en: "kawaii"},
+    {de: "Wem ist sicher warm", en: "someone who is definitely warm"},
+    {de: "Physikalisch unmögliche Haare", en: "physical impossible hair"},
+    {de: "Gender Fragezeichen", en: "What is your Gender"},
+    {de: "Zeitreisender", en: "timetraveller"},
+    {de: "Anime dass dich zum weinen gebracht hat", en: "anime that made you cry"},
+    {de: "Dein Anime Schwarm", en: "your anime crush"},
+    {de: "Cosplay Zwilling oder gleiches Shirt", en: "cosplay twin or same shirt"},
+    {de: "Cosplayer mit Kontaktlinsen", en: "cosplayer with contact lenses"},
+    {de: "Cyberpunk Edgerunner", en: "Cyberpunk Edgerunner"},
+    {de: "Bocchi the rock", en: "Bocchi the rock"},
+    {de: "Satoru Gojo", en: "Satoru Gojo"},
+    {de: "Aufwendiges Cosplay", en: "High effort Cosplay"},
+    {de: "Spy X Family", en: "Spy X Family"}
 ];
 
-
-// Generate an array of unique random numbers
-let numbers = [];
-while (numbers.length < rows * cols) {
-	let num = Math.floor(Math.random() * words.length);
-	if (!numbers.includes(num)) {
-		numbers.push(num);
-	}
+// ========== Utility Functions ==========
+function detectLanguage()
+{
+    const lang = (navigator.languages?.[0] || navigator.language || 'en');
+    return lang.startsWith('de') ? 'de' : 'en';
 }
 
-// Fill the bingo board with the generated words
-let index = 0;
-let table = document.getElementById("bingo-board");
-for (let row of table.rows) {
-	for (let cell of row.cells) {
-		let lang = language === "de" ? "de" : "en";
-		cell.textContent = words[numbers[index]][lang];
-		index++;
-	}
+function generateUniqueIndices(count, max)
+{
+    const indices = new Set();
+    while (indices.size < count)
+    {
+        indices.add(Math.floor(Math.random() * max));
+    }
+    return Array.from(indices);
+}
+
+function copyToClipboard(text)
+{
+    if (navigator.clipboard && window.isSecureContext)
+    {
+        return navigator.clipboard.writeText(text).catch(console.error);
+    }
+    else
+    {
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        temp.style.position = "absolute";
+        temp.style.left = "-9999px";
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+    }
+}
+
+function isMobileDevice()
+{
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+// ========== State Management ==========
+function saveBingoState(table)
+{
+    const state = Array.from(table.querySelectorAll("td")).map(cell => ({
+        marked: cell.classList.contains("marked"),
+        word: cell.textContent
+    }));
+    localStorage.setItem("bingoState", JSON.stringify(state));
+}
+
+// function loadBingoState(table)
+// {
+//     const state = JSON.parse(localStorage.getItem("bingoState"));
+//     if (!state) return;
+//     const cells = table.querySelectorAll("td");
+//     state.forEach((item, i) =>
+//     {
+//         const cell = cells[i];
+//         cell.textContent = item.word;
+//         cell.classList.toggle("marked", item.marked);
+//     });
+// }
+
+function loadBingoState(table) {
+    const stateJSON = localStorage.getItem("bingoState");
+    if (!stateJSON) return; // no saved state, just return
+
+    let state;
+    try {
+        state = JSON.parse(stateJSON);
+    } catch (e) {
+        console.warn("Failed to parse bingoState from localStorage:", e);
+        return; // corrupted data, ignore
+    }
+
+    if (!Array.isArray(state)) {
+        console.warn("bingoState data invalid, resetting.");
+        return;
+    }
+
+    const cells = table.querySelectorAll("td");
+    state.forEach((item, i) => {
+        if (cells[i]) {
+            cells[i].textContent = item.word || "";
+            if (item.marked) {
+                cells[i].classList.add("marked");
+            } else {
+                cells[i].classList.remove("marked");
+            }
+        }
+    });
 }
 
 
-function copyToClipboard(text) {
-	// Create a temporary input element
-	let tempInput = document.createElement("textarea");
-	tempInput.value = text;
-	document.body.appendChild(tempInput);
-
-	// Select the text and copy it
-	tempInput.select();
-	document.execCommand("copy");
-
-	// Remove the temporary input element
-	document.body.removeChild(tempInput);
-}
-
-// Function, to open ContextModal 
-let modal = document.getElementById("context_Modal");
-let closeButton = document.querySelector(".close");
 
 const button2 = document.getElementById("modal-button2");
 
+// Open button2 URL in new tab for viewing hashtag for keyword
 function handleButton2Click() {
-	// console.log("test");
-	const url = button2.dataset.url;
-	if (!url) {
-		return;
-	}
-	window.open(url, '_blank');
+    const url = button2.dataset.url;
+    if (!url) return;
+    window.open(url, '_blank');
 }
 
-button2.addEventListener("click", () => handleButton2Click());
+button2.addEventListener("click", handleButton2Click);
 
+// ========== Modal Handling ==========
+function openContextModal(title, text, button1Text, button2Text, url)
+{
+    const modal = document.getElementById("context_Modal");
+    const button2 = document.getElementById("modal-button2");
 
-function openContextModal(title, text, button1Text, button2Text, url, word, lang) {
-	document.getElementById("modal-title").textContent = title;
-	document.getElementById("modal-text").textContent = text;
-	document.getElementById("modal-button1").textContent = button1Text;
-	button2.textContent = button2Text;
-	button2.dataset.url = url;
-	// // Add a click event listener to the first button
-	// let button1 = document.getElementById("modal-button1");
-	// button1.addEventListener("click", function () {
-	// 	copyToClipboard("#" + word + "JD");
-	// 	button1.style.backgroundColor = "red";
-	// 	setTimeout(function () {
-	// 		button1.style.backgroundColor = "";
-	// 	}, 500);
-	// });
-	modal.style.display = "block";
+    document.getElementById("modal-title").textContent = title;
+    document.getElementById("modal-text").textContent = text;
+    document.getElementById("modal-button1").textContent = button1Text;
+
+    button2.textContent = button2Text;
+    button2.dataset.url = url;
+
+    modal.style.display = "block";
 }
 
-// Function to close any modal window
-function closeModal() {
-	var modals = document.querySelectorAll('.modal');
-	modals.forEach(function (modal) {
-		modal.style.display = 'none';
-	});
+// Close all modals on clicking close buttons or outside modal
+function closeModal()
+{
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => modal.style.display = 'none');
 }
 
-// Event-Listener, to close any modal window
-var closeButtons = document.querySelectorAll('.close');
-closeButtons.forEach(function (closeButton) {
-	closeButton.addEventListener('click', closeModal);
+document.querySelectorAll('.close').forEach(closeBtn =>
+    closeBtn.addEventListener('click', closeModal)
+);
+
+window.addEventListener('click', (event) =>
+{
+    document.querySelectorAll('.modal').forEach(modal =>
+    {
+        if (event.target === modal) closeModal();
+    });
 });
 
-// Event-Listener, to close any modal window when clicking outside of it
-window.addEventListener('click', function (event) {
-	var modals = document.querySelectorAll('.modal');
-	modals.forEach(function (modal) {
-		if (event.target == modal) {
-			closeModal();
-		}
-	});
+// ========== Bingo Logic ==========
+function fillBingoBoard(words, indices, lang)
+{
+    const table = document.getElementById("bingo-board");
+    let index = 0;
+    for (let row of table.rows)
+    {
+        for (let cell of row.cells)
+        {
+            cell.textContent = words[indices[index++]][lang];
+        }
+    }
+}
+
+function setupCellEvents(cell, words, lang, table)
+{
+    cell.addEventListener("click", () =>
+    {
+        if (!isMobileDevice())
+        {
+            cell.classList.toggle("marked");
+            saveBingoState(table);
+        }
+    });
+
+    cell.addEventListener("dblclick", () => openHashtagModal(cell, words, lang));
+
+    cell.addEventListener("touchstart", e =>
+    {
+        cell.dataset.startX = e.changedTouches[0].clientX;
+        cell.dataset.startY = e.changedTouches[0].clientY;
+    });
+
+    cell.addEventListener("touchend", e =>
+    {
+        const dx = e.changedTouches[0].clientX - parseFloat(cell.dataset.startX || 0);
+        const dy = e.changedTouches[0].clientY - parseFloat(cell.dataset.startY || 0);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 20)
+        {
+            cell.classList.toggle("marked");
+            saveBingoState(table);
+        }
+        else if (dist < 100)
+        {
+            openHashtagModal(cell, words, lang);
+        }
+    });
+}
+
+// Open modal with hashtags, links, and copy-to-clipboard functionality
+function openHashtagModal(cell, words, lang)
+{
+    const word = cell.textContent.trim();
+    const index = words.findIndex(w => w[lang] === word);
+    const hashtag = words[index]?.en || word;
+    const tagPart = hashtag.replace(/\s+/g, "") + "_" + eventName;  // added underscore between hashtag and eventName
+    const link = `https://www.instagram.com/explore/tags/${encodeURIComponent(tagPart)}`;
+
+    const modalText = lang === 'de'
+        ? `Verwenden Sie diesen Hashtag auf Instagram #${tagPart}`
+        : `Use this Hashtag on Instagram #${tagPart}`;
+
+    openContextModal(
+        hashtag,
+        modalText,
+        lang === 'de' ? "Hashtags in die Zwischenablage kopieren" : "Copy hashtags to clipboard",
+        lang === 'de' ? "Diesen Hashtag auf Instagram ansehen" : "View this Hashtag on Instagram",
+        link,
+        word
+    );
+
+    const button1 = document.getElementById("modal-button1");
+    button1.onclick = () =>
+    {
+        const tag = `#${tagPart} #cosplaybingo${eventName.toLowerCase()}`;
+        copyToClipboard(tag);
+        button1.style.backgroundColor = "red";
+        setTimeout(() => button1.style.backgroundColor = "", 1000);
+    };
+}
+
+// ========== Tutorial Modal Logic ==========
+
+function showTutorialModal()
+{
+    const tutorialModal = document.getElementById("tutorial-modal");
+    tutorialModal.style.display = "block";
+    
+    const closeBtn = document.getElementById("tutorial-modal-close");
+    if (!closeBtn.dataset.listenerAdded)
+    {
+        closeBtn.addEventListener("click", () =>
+        {
+            tutorialModal.style.display = "none";
+            localStorage.setItem("tutorialModalShown", true);
+        });
+        closeBtn.dataset.listenerAdded = "true";
+    }
+}
+
+// ========== Initialization on DOM ready ==========
+window.addEventListener("DOMContentLoaded", () => {
+    const lang = detectLanguage();
+    const table = document.getElementById("bingo-board");
+
+    // Setup bingo board
+    const indices = generateUniqueIndices(ROWS * COLS, WORDS.length);
+    fillBingoBoard(WORDS, indices, lang);
+    loadBingoState(table);
+
+    // Setup events for each cell
+    for (let row of table.rows) {
+        for (let cell of row.cells) {
+            setupCellEvents(cell, WORDS, lang, table);
+        }
+    }
+
+    // Reset button: reshuffle board and clear markings
+    document.getElementById("reset-button").addEventListener("click", () => {
+        const newIndices = generateUniqueIndices(ROWS * COLS, WORDS.length);
+        fillBingoBoard(WORDS, newIndices, lang);
+        Array.from(table.querySelectorAll("td")).forEach(td => td.classList.remove("marked"));
+        saveBingoState(table);
+    });
+
+    // Show tutorial modal if not shown before
+    if (!localStorage.getItem("tutorialModalShown")) {
+        showTutorialModal();
+    }
+
+    // Tutorial button triggers tutorial modal
+    document.getElementById("tutorial-button")?.addEventListener("click", showTutorialModal);
+
+    // Set "View All" button link dynamically with eventName
+    const viewAllButton = document.getElementById('view-all-button');
+    viewAllButton.onclick = () => {
+        const url = `https://www.instagram.com/explore/tags/cosplaybingo${eventName.toLowerCase()}`;
+        window.open(url, '_blank');
+    };
 });
 
-// Function to show the tutorial modal window
-function showTutorialModal() {
-	var tutorialModal = document.getElementById("tutorial-modal");
-	tutorialModal.style.display = "block";
-
-	// Event-Listener, to close tutorial modal window
-	var tutorialModalCloseButton = document.getElementById("tutorial-modal-close");
-	tutorialModalCloseButton.addEventListener("click", function () {
-		tutorialModal.style.display = "none";
-		localStorage.setItem("tutorialModalShown", true);
-	});
-}
-
-// When site is finished loaded, check if tutorial modal window already shown
-window.addEventListener("DOMContentLoaded", function () {
-	var tutorialModalShown = localStorage.getItem("tutorialModalShown");
-	if (!tutorialModalShown) {
-		showTutorialModal();
-	}
-});
-
-// Open Tutorial Modal via helper Button 
-const helperButton = document.getElementById("tutorial-button");
-helperButton.addEventListener("click", () => {
-	showTutorialModal();;
-});
-
-function handleHashtagGeneration(cell) {
-	let word = cell.textContent.trim();
-	let lang = language === "de" ? "de" : "en";
-	let index = words.findIndex(w => w[lang] === word);
-	let hashtag = words[index].en;
-	link = "https://www.instagram.com/explore/tags/" + encodeURIComponent(hashtag.replace(/\s+/g, "")) + "MMC";
-	switch (lang) {
-		case 'de':
-			openContextModal(hashtag, "Verwenden Sie diesen Hashtag auf Instagram #" + hashtag.replace(/\s+/g, "") + "MMC", "Hashtags in die Zwischenablage kopieren", "Diesen Hashtag auf Instagram ansehen", link, word);
-			break;
-		default:
-			openContextModal(hashtag, "Use this Hashtag on Instagram #" + hashtag.replace(/\s+/g, "") + "MMC", "Copy hashtags to clipboard", "View this Hashtag on Instagram", link, word);
-	}
-
-
-	// // Handle click events for modal buttons old
-	// let button1 = document.getElementById("modal-button1");
-	// button1.addEventListener("click", function () {
-	// 	copyToClipboard("#" + hashtag + "JD");
-	// 	button1.style.backgroundColor = "red";
-	// 	setTimeout(function () {
-	// 		button1.style.backgroundColor = "";
-	// 	}, 1000);
-	// });
-
-	// Add a click event listener to the first button
-	let button1 = document.getElementById("modal-button1");
-	button1.addEventListener("click", function () {
-		let textToCopy = "#" + hashtag.replace(/\s+/g, "") + "MMC #" + "cosplaybingommc";
-		copyToClipboard(textToCopy);
-		console.log(textToCopy);
-		button1.style.backgroundColor = "red";
-		setTimeout(function () {
-			button1.style.backgroundColor = "";
-		}, 1000);
-	});
-}
-
-// Handle clicks on the cells
-for (let row of table.rows) {
-	for (let cell of row.cells) {
-		let touchstartX = null;
-		let touchstartY = null;
-		let touchendX = null;
-		let touchendY = null;
-
-		// Handle click event
-		cell.addEventListener("click", () => {
-			if (!isMobileDevice()) {
-				cell.classList.toggle("marked");
-				saveState();
-			}
-		});
-
-		// Handle double click event
-		cell.addEventListener("dblclick", () => {
-			handleHashtagGeneration(cell);
-		});
-
-		// Handle touch events
-		cell.addEventListener("touchstart", (event) => {
-			if (isMobileDevice()) {
-				touchstartX = event.changedTouches[0].clientX;
-				touchstartY = event.changedTouches[0].clientY;
-			}
-		});
-
-		cell.addEventListener("touchend", (event) => {
-			if (isMobileDevice()) {
-				touchendX = event.changedTouches[0].clientX;
-				touchendY = event.changedTouches[0].clientY;
-
-				// Calculate touch distance
-				let touchDistance = Math.sqrt(Math.pow(touchendX - touchstartX, 2) + Math.pow(touchendY - touchstartY, 2));
-
-				if (touchDistance < 20) { // erhöhter Schwellenwert für Single-Touch-Event
-					// Single touch event detected
-					if (!cell.classList.contains("marked")) {
-						cell.classList.add("marked");
-						saveState();
-					} else {
-						cell.classList.remove("marked");
-						saveState();
-					}
-				} else if (touchDistance < 100) { // erhöhter Schwellenwert für Double-Touch-Event
-					// Double touch event detected
-					handleHashtagGeneration(cell);
-				}
-			}
-		});
-	}
-}
-
-// Check if the device is a mobile device
-function isMobileDevice() {
-	return typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('Android') !== -1 || navigator.userAgent.indexOf('iOS') !== -1;
-}
-
-// Save and load the state of the bingo board
-function saveState() {
-	let state = [];
-	for (let row of table.rows) {
-		for (let cell of row.cells) {
-			let cellState = { marked: cell.classList.contains("marked"), word: cell.textContent };
-			state.push(cellState);
-		}
-	}
-	localStorage.setItem("bingoState", JSON.stringify(state));
-}
-
-function loadState() {
-	let state = JSON.parse(localStorage.getItem("bingoState"));
-	if (state) {
-		let index = 0;
-		for (let row of table.rows) {
-			for (let cell of row.cells) {
-				let cellState = state[index];
-				if (cellState.marked) {
-					cell.classList.add("marked");
-				} else {
-					cell.classList.remove("marked");
-				}
-				cell.textContent = cellState.word;
-				index++;
-			}
-		}
-	}
-}
-
-loadState();
-
-// Handle click on reset button
-let resetBtn = document.getElementById("reset-button");
-resetBtn.addEventListener("click", () => {
-	// Generate a new array of unique random numbers
-	let newNumbers = [];
-	while (newNumbers.length < rows * cols) {
-		let num = Math.floor(Math.random() * words.length);
-		if (!newNumbers.includes(num)) {
-			newNumbers.push(num);
-		}
-	}
-	// Fill the bingo board with the new generated words
-	let index = 0;
-	for (let row of table.rows) {
-		for (let cell of row.cells) {
-			cell.textContent = words[newNumbers[index]][language];
-			cell.classList.remove("marked");
-			index++;
-		}
-	}
-	// Save the new state
-	saveState();
-});
-
-
-
-/* Custom Function to adjust font size based on word length and cell height based on number of rows */
-function adjustCellSize() {
-	let cells = document.getElementsByTagName("td");
-	let cellHeight = table.offsetHeight / rows; // calculate height of each cell based on number of rows
-
-	for (let cell of cells) {
-		let wordLength = cell.textContent.length;
-
-		if (wordLength <= 5) {
-			cell.style.fontSize = "30px";
-		} else if (wordLength <= 8) {
-			cell.style.fontSize = "24px";
-		} else {
-			cell.style.fontSize = "20px";
-		}
-
-		// cell.style.height = cellHeight + "px"; // set height of each cell
-	}
-}
-
-/* Apply custom function to all td elements on page load */
-window.onload = function () {
-	const tds = document.querySelectorAll("td");
-	for (const td of tds) {
-		adjustCellSize(td);
-	}
-};

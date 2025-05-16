@@ -1,23 +1,19 @@
-$l = $('.left')
-$r = $('.right')
+const $left = $('.left');
+const $right = $('.right');
+const $container = $('.container');
 
-$l.mouseenter(function() {
-  $('.container').addClass('left-is-hovered');
-}).mouseleave(function() {
-  $('.container').removeClass('left-is-hovered');
-});
+$left
+    .on('mouseenter', () => $container.addClass('left-is-hovered'))
+    .on('mouseleave', () => $container.removeClass('left-is-hovered'));
 
-$r.mouseenter(function() {
-  $('.container').addClass('right-is-hovered');
-}).mouseleave(function() {
-  $('.container').removeClass('right-is-hovered');
-});
+$right
+    .on('mouseenter', () => $container.addClass('right-is-hovered'))
+    .on('mouseleave', () => $container.removeClass('right-is-hovered'));
 
 
-window.addEventListener('unload', function() {
-  // Leere den localStorage
-  localStorage.clear();
-  console.log("popstate triggert");
-  // Leere den sessionStorage
-  sessionStorage.clear();
+window.addEventListener('pagehide', function ()
+{
+    localStorage.clear();
+    sessionStorage.clear();
+    console.log('Page is hiding, storage cleared.');
 });
