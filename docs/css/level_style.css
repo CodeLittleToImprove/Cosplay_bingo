@@ -76,7 +76,7 @@ a.cta:hover:before {
 .container .one-half.left {
   left: 0;
   background: url('../images/mainstream_level.webp') center center no-repeat;
-  background-size: cover;
+  background-size: 75%;
 }
 .container .one-half.left:before {
   content: "";
@@ -88,7 +88,7 @@ a.cta:hover:before {
 .container .one-half.right {
   right: 0;
   background: url('../images/weeb_level.webp') center center no-repeat;
-  background-size: cover;
+  background-size: 75%;
 }
 .container .one-half.right:before {
   content: "";
