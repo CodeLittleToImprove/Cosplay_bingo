@@ -1,15 +1,58 @@
 // ========== Constants ==========
 const ROWS = 5;
 const COLS = 5;
-const eventName = "JAPANTAG2025"
+const DEFAULT_EVENT_NAME = "JAPANTAG2025";
+let eventName = DEFAULT_EVENT_NAME;
 
-const WORDS = [
+
+async function loadWordsFromCSV(path)
+{
+    try
+    {
+        const response = await fetch(path);
+        if (!response.ok) throw new Error(`Failed to fetch ${path}`);
+
+        const text = await response.text();
+        const lines = text.trim().split("\n").map(line => line.trim());
+
+        // Handle eventname
+        eventName = "DefaultEvent";
+        if (lines[0].startsWith("eventname,"))
+        {
+            eventName = lines[0].split(",")[1].trim();
+            lines.shift(); // remove eventname line
+        }
+
+        // Expect headers: "de,en"
+        const headers = lines.shift()?.split(",").map(h => h.trim().toLowerCase());
+        if (!headers || headers.length !== 2 || headers[0] !== "de" || headers[1] !== "en")
+        {
+            throw new Error("Invalid header in CSV. Expected: 'de,en'");
+        }
+
+        // Parse word entries
+        const words = lines.map(line =>
+        {
+            const [de, en] = line.split(",").map(val => val.trim());
+            return {de, en};
+        });
+
+        return {eventName, words};
+    } catch (error)
+    {
+        console.error("Error loading CSV:", error);
+        throw error;
+    }
+}
+
+
+const WORDS_FALLBACK = [
     {de: "Oldschool Anime Charakter", en: "old-school anime character"},
     {de: "Computergenerierte Stimme", en: "computer generated voice"},
     {de: "Dein Lieblingscharakter", en: "your favorite character"},
     {de: "Hintergrundcharakter", en: "background character"},
     {de: "Geschlechtertausch", en: "genderswap"},
-    {de: "Gruppencosplay", en: "group cosplay "},
+    {de: "Gruppencosplay", en: "group cosplay"},
     {de: "Toter Charakter", en: "dead character"},
     {de: "Eltern Rip", en: "parents rip"},
     {de: "Wem ist sicher kalt", en: "someone who is definitely cold"},
@@ -73,64 +116,60 @@ function isMobileDevice()
 }
 
 // ========== State Management ==========
-function saveBingoState(table)
+function saveBingoState(table, key = "bingoState")
 {
     const state = Array.from(table.querySelectorAll("td")).map(cell => ({
         marked: cell.classList.contains("marked"),
         word: cell.textContent
     }));
-    localStorage.setItem("bingoState", JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
 }
 
-// function loadBingoState(table)
-// {
-//     const state = JSON.parse(localStorage.getItem("bingoState"));
-//     if (!state) return;
-//     const cells = table.querySelectorAll("td");
-//     state.forEach((item, i) =>
-//     {
-//         const cell = cells[i];
-//         cell.textContent = item.word;
-//         cell.classList.toggle("marked", item.marked);
-//     });
-// }
 
-function loadBingoState(table) {
-    const stateJSON = localStorage.getItem("bingoState");
-    if (!stateJSON) return; // no saved state, just return
+function loadBingoState(table, key = "bingoState")
+{
+    const stateJSON = localStorage.getItem(key);
+    if (!stateJSON) return;
 
     let state;
-    try {
+    try
+    {
         state = JSON.parse(stateJSON);
-    } catch (e) {
+    } catch (e)
+    {
         console.warn("Failed to parse bingoState from localStorage:", e);
-        return; // corrupted data, ignore
+        return;
     }
 
-    if (!Array.isArray(state)) {
+    if (!Array.isArray(state))
+    {
         console.warn("bingoState data invalid, resetting.");
         return;
     }
 
     const cells = table.querySelectorAll("td");
-    state.forEach((item, i) => {
-        if (cells[i]) {
+    state.forEach((item, i) =>
+    {
+        if (cells[i])
+        {
             cells[i].textContent = item.word || "";
-            if (item.marked) {
+            if (item.marked)
+            {
                 cells[i].classList.add("marked");
-            } else {
+            }
+            else
+            {
                 cells[i].classList.remove("marked");
             }
         }
     });
 }
 
-
-
 const button2 = document.getElementById("modal-button2");
 
 // Open button2 URL in new tab for viewing hashtag for keyword
-function handleButton2Click() {
+function handleButton2Click()
+{
     const url = button2.dataset.url;
     if (!url) return;
     window.open(url, '_blank');
@@ -187,14 +226,14 @@ function fillBingoBoard(words, indices, lang)
     }
 }
 
-function setupCellEvents(cell, words, lang, table)
+function setupCellEvents(cell, words, lang, table, key)
 {
     cell.addEventListener("click", () =>
     {
         if (!isMobileDevice())
         {
             cell.classList.toggle("marked");
-            saveBingoState(table);
+            saveBingoState(table, key);
         }
     });
 
@@ -215,12 +254,36 @@ function setupCellEvents(cell, words, lang, table)
         if (dist < 20)
         {
             cell.classList.toggle("marked");
-            saveBingoState(table);
+            saveBingoState(table, key);
         }
         else if (dist < 100)
         {
             openHashtagModal(cell, words, lang);
         }
+    });
+}
+
+
+function initBingoBoard(table, words, eventKey, lang)
+{
+    const indices = generateUniqueIndices(ROWS * COLS, words.length);
+    fillBingoBoard(words, indices, lang);
+    loadBingoState(table, eventKey);
+
+    for (let row of table.rows)
+    {
+        for (let cell of row.cells)
+        {
+            setupCellEvents(cell, words, lang, table, eventKey);
+        }
+    }
+
+    document.getElementById("reset-button").addEventListener("click", () =>
+    {
+        const newIndices = generateUniqueIndices(ROWS * COLS, words.length);
+        fillBingoBoard(words, newIndices, lang);
+        Array.from(table.querySelectorAll("td")).forEach(td => td.classList.remove("marked"));
+        saveBingoState(table, eventKey);
     });
 }
 
@@ -262,7 +325,7 @@ function showTutorialModal()
 {
     const tutorialModal = document.getElementById("tutorial-modal");
     tutorialModal.style.display = "block";
-    
+
     const closeBtn = document.getElementById("tutorial-modal-close");
     if (!closeBtn.dataset.listenerAdded)
     {
@@ -276,43 +339,41 @@ function showTutorialModal()
 }
 
 // ========== Initialization on DOM ready ==========
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () =>
+{
     const lang = detectLanguage();
     const table = document.getElementById("bingo-board");
 
-    // Setup bingo board
-    const indices = generateUniqueIndices(ROWS * COLS, WORDS.length);
-    fillBingoBoard(WORDS, indices, lang);
-    loadBingoState(table);
-
-    // Setup events for each cell
-    for (let row of table.rows) {
-        for (let cell of row.cells) {
-            setupCellEvents(cell, WORDS, lang, table);
+    let words = WORDS_FALLBACK;
+    try
+    {
+        const result = await loadWordsFromCSV("bingoboards/level1.csv");
+        if (result.words.length > 0)
+        {
+            words = result.words;
+            eventName = result.eventName;
         }
+    } catch (error)
+    {
+        console.warn("Using fallback due to CSV load failure.");
     }
 
-    // Reset button: reshuffle board and clear markings
-    document.getElementById("reset-button").addEventListener("click", () => {
-        const newIndices = generateUniqueIndices(ROWS * COLS, WORDS.length);
-        fillBingoBoard(WORDS, newIndices, lang);
-        Array.from(table.querySelectorAll("td")).forEach(td => td.classList.remove("marked"));
-        saveBingoState(table);
-    });
+    const storageKey = `bingoState_${eventName.toLowerCase()}`;
+    initBingoBoard(table, words, storageKey, lang);
 
-    // Show tutorial modal if not shown before
-    if (!localStorage.getItem("tutorialModalShown")) {
+    // Tutorial and "view all" logic remains the same
+    if (!localStorage.getItem("tutorialModalShown"))
+    {
         showTutorialModal();
     }
 
-    // Tutorial button triggers tutorial modal
     document.getElementById("tutorial-button")?.addEventListener("click", showTutorialModal);
 
-    // Set "View All" button link dynamically with eventName
-    const viewAllButton = document.getElementById('view-all-button');
-    viewAllButton.onclick = () => {
+    document.getElementById('view-all-button').onclick = () =>
+    {
         const url = `https://www.instagram.com/explore/tags/cosplaybingo${eventName.toLowerCase()}`;
         window.open(url, '_blank');
     };
 });
+
 

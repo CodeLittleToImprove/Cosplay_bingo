@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>CSV Creator for Bingo</title>
+	<style>
+        body {
+            font-family: sans-serif;
+            padding: 1rem;
+            background-color: #f8f8f8;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-weight: bold;
+            flex: 1 1 200px;
+            min-width: 150px;
+        }
+
+        input[type="text"]#event-name {
+            width: 100%;
+            padding: 0.4rem 0.5rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            background-color: #0069d9;
+            color: white;
+            border-radius: 4px;
+            flex: 1 1 150px;
+            min-width: 120px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #004a9f;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        th {
+            background-color: #f1f1f1;
+            font-weight: 600;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.4rem 0.5rem;
+            box-sizing: border-box;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #0069d9;
+            outline: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            th, td {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.5rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            button, label {
+                flex: 1 1 auto;
+                min-width: auto;
+            }
+        }
+	</style>
+</head>
+<body>
+
+<h1>Bingo CSV Generator (25 Entries)</h1>
+
+<div class="controls">
+	<label for="event-name">Event Name:
+		<input type="text" id="event-name" value="JAPANTAG2026"/>
+	</label>
+	<button onclick="downloadCSV()">Download CSV</button>
+</div>
+
+<table id="word-table" aria-label="Bingo words input table">
+	<thead>
+	<tr>
+		<th>Deutsch (de)</th>
+		<th>English (en)</th>
+	</tr>
+	</thead>
+	<tbody id="table-body"></tbody>
+</table>
+
+<!-- Second download button -->
+<div style="margin-top: 1rem; text-align: center;">
+	<button onclick="downloadCSV()">Download CSV</button>
+</div>
+
+<script>
+    let csvDownloadCounter = 1;
+    // Initialize with 25 empty rows
+    const tableBody = document.getElementById("table-body");
+    for (let i = 0; i < 25; i++)
+    {
+        const row = document.createElement("tr");
+
+        const deCell = document.createElement("td");
+        const deInput = document.createElement("input");
+        deInput.type = "text";
+        deInput.autocomplete = "off";
+        deInput.spellcheck = false;
+        deCell.appendChild(deInput);
+
+        const enCell = document.createElement("td");
+        const enInput = document.createElement("input");
+        enInput.type = "text";
+        enInput.autocomplete = "off";
+        enInput.spellcheck = false;
+        enCell.appendChild(enInput);
+
+        row.appendChild(deCell);
+        row.appendChild(enCell);
+
+        tableBody.appendChild(row);
+    }
+
+    function downloadCSV()
+    {
+        const eventName = document.getElementById("event-name").value.trim();
+        const rows = [];
+
+        // Header
+        rows.push(`eventname,${eventName}`);
+        rows.push(`de,en`);
+
+        // Words
+        const trs = tableBody.querySelectorAll("tr");
+        trs.forEach(tr =>
+        {
+            const inputs = tr.querySelectorAll("input");
+            const de = inputs[0].value.trim();
+            const en = inputs[1].value.trim();
+            rows.push(`${de},${en}`);
+        });
+
+        const csvContent = rows.join("\n");
+        const blob = new Blob([csvContent], {type: "text/csv;charset=utf-8;"});
+        const link = document.createElement("a");
+        link.setAttribute("href", URL.createObjectURL(blob));
+        link.setAttribute("download", `words_${csvDownloadCounter}.csv`);
+        csvDownloadCounter++;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+
+</body>
+</html>

@@ -12,6 +12,7 @@ html, body {
 
 h1 {
   color: #fff;
+  position: relative;
   position: absolute;
   left: 50%;
   top: 20%;
@@ -75,8 +76,8 @@ a.cta:hover:before {
 }
 .container .one-half.left {
   left: 0;
-  background: url('../images/mainstream_level.webp') center center no-repeat;
-  background-size: 70%;
+  background: url("https://wallpaperaccess.com/full/256356.jpg") center center no-repeat;
+  background-size: cover;
 }
 .container .one-half.left:before {
   content: "";
@@ -87,8 +88,8 @@ a.cta:hover:before {
 }
 .container .one-half.right {
   right: 0;
-  background: url('../images/weeb_level.webp') center center no-repeat;
-  background-size: 70%;
+  background: url("https://i.redd.it/fk7ipnkk3et91.jpg") center center no-repeat;
+  background-size: cover;
 }
 .container .one-half.right:before {
   content: "";

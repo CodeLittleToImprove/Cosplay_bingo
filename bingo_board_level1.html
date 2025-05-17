@@ -13,13 +13,14 @@
         }
 	</style>
 	<script>
-        document.addEventListener("DOMContentLoaded", function (event)
+        document.addEventListener("DOMContentLoaded", function ()
         {
             var userLang = navigator.language
             if (userLang === "de-DE")
             {
-                window.location.href = "bingo_board_level2_ger.html";
-            } else
+                window.location.href = "bingo_board_level1_ger.html";
+            }
+            else
             {
                 document.body.style.visibility = "visible";
             }
@@ -29,8 +30,6 @@
 	<link rel="stylesheet" href="./css/modal.css">
 	<script src="./scripts/bingo_level1.js" defer></script>
 </head>
-
-<!-- Tabindex="-1" is needed for disabling touch to search -->
 
 <body>
 <div id="tutorial-modal" class="modal">
