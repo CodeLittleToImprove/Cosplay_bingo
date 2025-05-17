@@ -30,7 +30,9 @@ td {
 	width: 20%;
 	height: 100px;
 	padding: 8px;
-	word-break: break-word;
+	white-space: normal;
+	word-break: keep-all;
+	overflow-wrap: break-word;
 	background-color: #fff;
 	transition: background-color 0.2s ease;
 	cursor: pointer;
