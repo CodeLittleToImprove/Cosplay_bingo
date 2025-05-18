@@ -22,9 +22,11 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start; /* Align items to the top */
 	height: 100%;
+	padding-top: 12px; /* Optional: some padding from top */
 }
+
 
 /* ======= Layout Wrappers ======= */
 .table-wrap {
@@ -33,7 +35,13 @@ body {
 	justify-content: center;
 	align-items: center;
 	padding: 12px;
+	max-width: 100vw;
+	max-height: calc(100vh - 80px); /* Leave room for buttons & padding */
+	overflow: hidden;
+	flex-direction: column; /* stack table + buttons vertically */
+	gap: 12px; /* spacing between table and buttons */
 }
+
 
 /* ======= Table & Cell Styling ======= */
 table {
@@ -108,5 +116,11 @@ button:hover {
 	td {
 		font-size: 3vmin;
 		padding: 2px;
+	}
+
+	table {
+		width: 90vw;
+		height: 90vw; /* Keep it square but use viewport width */
+		max-height: 80vh; /* So buttons stay visible */
 	}
 }
