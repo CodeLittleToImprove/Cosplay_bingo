@@ -214,21 +214,20 @@ window.addEventListener('click', (event) =>
 
 // ========== Bingo Logic ==========
 
-function autoResizeCellFonts() {
+function autoResizeCellFonts()
+{
     const cells = document.querySelectorAll('#bingo-board td');
 
-    cells.forEach(cell => {
-        let fontSize = 2.5; // vmin
+    cells.forEach(cell =>
+    {
+        let fontSize = 2.5;
         cell.style.fontSize = `${fontSize}vmin`;
+        const words = cell.textContent.trim().split(/\s+/);
 
-        // Reset any transforms first
-        cell.style.transform = 'scale(1)';
-        cell.style.transformOrigin = 'center';
-
-        // Shrink text until it fits
-        while (cell.scrollHeight > cell.clientHeight || cell.scrollWidth > cell.clientWidth) {
+        // If word is long or cell text wraps to more than 2 lines
+        while ((cell.scrollHeight > cell.clientHeight * 0.9 || words.some(w => w.length > 12)) && fontSize > 1.2)
+        {
             fontSize -= 0.1;
-            if (fontSize < 1.2) break; // Minimum font size
             cell.style.fontSize = `${fontSize}vmin`;
         }
     });
@@ -246,7 +245,7 @@ function fillBingoBoard(words, indices, lang)
             cell.textContent = words[indices[index++]][lang];
         }
     }
-    //autoResizeCellFonts();
+    autoResizeCellFonts();
 }
 
 function setupCellEvents(cell, words, lang, table, key)
