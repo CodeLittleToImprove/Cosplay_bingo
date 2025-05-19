@@ -213,6 +213,28 @@ window.addEventListener('click', (event) =>
 });
 
 // ========== Bingo Logic ==========
+
+function autoResizeCellFonts() {
+    const cells = document.querySelectorAll('#bingo-board td');
+
+    cells.forEach(cell => {
+        let fontSize = 2.5; // vmin
+        cell.style.fontSize = `${fontSize}vmin`;
+
+        // Reset any transforms first
+        cell.style.transform = 'scale(1)';
+        cell.style.transformOrigin = 'center';
+
+        // Shrink text until it fits
+        while (cell.scrollHeight > cell.clientHeight || cell.scrollWidth > cell.clientWidth) {
+            fontSize -= 0.1;
+            if (fontSize < 1.2) break; // Minimum font size
+            cell.style.fontSize = `${fontSize}vmin`;
+        }
+    });
+}
+
+
 function fillBingoBoard(words, indices, lang)
 {
     const table = document.getElementById("bingo-board");
@@ -224,6 +246,7 @@ function fillBingoBoard(words, indices, lang)
             cell.textContent = words[indices[index++]][lang];
         }
     }
+    //autoResizeCellFonts();
 }
 
 function setupCellEvents(cell, words, lang, table, key)
