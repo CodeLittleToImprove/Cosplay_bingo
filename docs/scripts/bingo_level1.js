@@ -249,7 +249,7 @@ function fillBingoBoard(words, indices, lang)
             cell.textContent = words[indices[index++]][lang];
         }
     }
-    autoResizeCellFonts();
+    //autoResizeCellFonts();
 }
 
 function setupCellEvents(cell, words, lang, table, key)
