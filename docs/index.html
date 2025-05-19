@@ -41,11 +41,11 @@
 <body>
 <!-- English Section -->
 <div id="en" class="language-section container">
-	<a href="bingo_board_level1.html" class="one-half left full-link">
+	<a href="#" data-href="bingo_board_level1.html" class="one-half left full-link">
 		<h1>MAINSTREAM LEVEL</h1>
 		<span class="cta">Let's Play</span>
 	</a>
-	<a href="bingo_board_level2.html" class="one-half right full-link">
+	<a href="#" data-href="bingo_board_level2.html" class="one-half right full-link">
 		<h1>WEEB LEVEL</h1>
 		<span class="cta">Let's Play</span>
 	</a>
@@ -53,11 +53,11 @@
 
 <!-- German Section -->
 <div id="de" class="language-section container">
-	<a href="bingo_board_level1_ger.html" class="one-half left full-link">
+	<a href="#" data-href="bingo_board_level1_ger.html" class="one-half left full-link">
 		<h1>MAINSTREAM LEVEL</h1>
 		<span class="cta">Spielen</span>
 	</a>
-	<a href="bingo_board_level2_ger.html" class="one-half right full-link">
+	<a href="#" data-href="bingo_board_level2_ger.html" class="one-half right full-link">
 		<h1>WEEB LEVEL</h1>
 		<span class="cta">Spielen</span>
 	</a>
@@ -67,6 +67,22 @@
 		integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
 		crossorigin="anonymous"></script>
 <script src="scripts/level_script.js"></script>
+<script>
+    document.querySelectorAll('.full-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault(); // stop default navigation
+            const href = this.dataset.href;
+
+            // Optional: Add a class for transition (if you want to style it)
+            document.body.classList.add('page-exit');
+
+            // Wait 300ms then navigate
+            setTimeout(() => {
+                window.location.href = href;
+            }, 800); // adjust as needed
+        });
+    });
+</script>
 </body>
 
 </html>
