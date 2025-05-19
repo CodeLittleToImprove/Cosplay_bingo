@@ -36,6 +36,9 @@ td {
 	cursor: pointer;
 	user-select: none;
 	font-size: clamp(0.8rem, 1.6vw, 1rem);
+	hyphens: auto;
+	-webkit-hyphens: auto; /* Safari */
+	-ms-hyphens: auto;     /* IE/Edge legacy */
 	overflow-wrap: break-word;
 	word-break: break-word;
 	line-height: 1.2
