@@ -214,22 +214,26 @@ window.addEventListener('click', (event) =>
 
 // ========== Bingo Logic ==========
 
-function autoResizeCellFonts()
-{
+// function autoResizeCellFonts() {
+//     const cells = document.querySelectorAll('#bingo-board td');
+//
+//     cells.forEach(cell => {
+//         const words = cell.textContent.trim().split(/\s+/);
+//         const hasLongWord = words.some(word => word.length > 9);
+//
+//         // Use smaller font if there's a long word
+//         cell.style.fontSize = hasLongWord ? '3vmin' : '4vmin';
+//     });
+// }
+
+function autoResizeCellFonts() {
     const cells = document.querySelectorAll('#bingo-board td');
 
-    cells.forEach(cell =>
-    {
-        let fontSize = 2.5;
-        cell.style.fontSize = `${fontSize}vmin`;
-        const words = cell.textContent.trim().split(/\s+/);
+    cells.forEach(cell => {
+        const textLength = cell.textContent.trim().length;
 
-        // If word is long or cell text wraps to more than 2 lines
-        while ((cell.scrollHeight > cell.clientHeight * 0.9 || words.some(w => w.length > 12)) && fontSize > 1.2)
-        {
-            fontSize -= 0.1;
-            cell.style.fontSize = `${fontSize}vmin`;
-        }
+        // Use smaller font if the total text is longer than 9 characters
+        cell.style.fontSize = textLength > 9 ? '3vmin' : '4vmin';
     });
 }
 
@@ -245,7 +249,7 @@ function fillBingoBoard(words, indices, lang)
             cell.textContent = words[indices[index++]][lang];
         }
     }
-    autoResizeCellFonts();
+    //autoResizeCellFonts();
 }
 
 function setupCellEvents(cell, words, lang, table, key)
