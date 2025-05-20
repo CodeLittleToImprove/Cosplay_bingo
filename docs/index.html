@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--level selection is the new index.html -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, max-age=0">
@@ -9,113 +8,30 @@
     <base href="index.html">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="css/level_style.css">
-    <style>
-        body {
-            visibility: hidden;
-        }
-
-        .language-section {
-            display: none;
-        }
-    </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var userLang = navigator.language || navigator.userLanguage;
-            var isGerman = userLang.startsWith("de");
-
-            if (isGerman) {
-                document.getElementById("de").style.display = "block";
-            } else {
-                document.getElementById("en").style.display = "block";
-            }
-
-            document.body.style.visibility = "visible";
-        });
-    </script>
 </head>
-
 <body>
 
 <!-- English Section -->
 <div id="en" class="language-section container">
     <div class="page-headline">Select Your Level</div>
-    <a href="#" data-href="bingo_board_level1.html" class="one-half left full-link">
-        <!--		<h1>MAINSTREAM LEVEL</h1>-->
-        <span class="cta">Let's Play</span>
-    </a>
-    <a href="#" data-href="bingo_board_level2.html" class="one-half right full-link">
-        <!--		<h1>WEEB LEVEL</h1>-->
-        <span class="cta">Let's Play</span>
-    </a>
+    <a href="#" data-href="bingo_board_level1.html" class="one-half left full-link"><span class="cta">Let's Play</span></a>
+    <a href="#" data-href="bingo_board_level2.html" class="one-half right full-link"><span class="cta">Let's Play</span></a>
 </div>
 
 <!-- German Section -->
 <div id="de" class="language-section container">
     <div class="page-headline">Level auswählen</div>
-    <a href="#" data-href="bingo_board_level1_ger.html" class="one-half left full-link">
-        <!--		<h1>MAINSTREAM LEVEL</h1>-->
-        <span class="cta">Spielen</span>
-    </a>
-    <a href="#" data-href="bingo_board_level2_ger.html" class="one-half right full-link">
-        <!--		<h1>WEEB LEVEL</h1>-->
-        <span class="cta">Spielen</span>
-    </a>
+    <a href="#" data-href="bingo_board_level1_ger.html" class="one-half left full-link"><span class="cta">Spielen</span></a>
+    <a href="#" data-href="bingo_board_level2_ger.html" class="one-half right full-link"><span
+            class="cta">Spielen</span></a>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
-        crossorigin="anonymous"></script>
+<!-- Invisible clickable area -->
+<div id="secret-area"></div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="scripts/level_script.js"></script>
-<script>
-    document.querySelectorAll('.full-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault(); // stop default navigation
-            const href = this.dataset.href;
-
-            // Optional: Add a class for transition (if you want to style it)
-            document.body.classList.add('page-exit');
-
-            // Wait 300ms then navigate
-            setTimeout(() => {
-                window.location.href = href;
-            }, 800); // adjust as needed
-        });
-    });
-</script>
-<!-- Secret Tap Area -->
-<div id="secret-area"
-	 style="position:fixed; top:0; right:0; width:100px; height:100px; z-index:999;"></div>
-
-<script>
-	let pressTimer;
-	const area = document.getElementById('secret-area');
-
-	// Determine language on load
-	const userLang = navigator.language || navigator.userLanguage;
-	const isGerman = userLang.startsWith("de");
-	const secretUrl = isGerman ? "dein-geheimes-seite.html" : "your-secret-page.html";
-
-	function startPressTimer() {
-		pressTimer = setTimeout(() => {
-			window.location.href = secretUrl;
-		}, 2000); // Hold for 2 seconds
-	}
-
-	function cancelPressTimer() {
-		clearTimeout(pressTimer);
-	}
-
-	// Touch support
-	area.addEventListener('touchstart', startPressTimer);
-	area.addEventListener('touchend', cancelPressTimer);
-	area.addEventListener('touchcancel', cancelPressTimer);
-
-	// Mouse support (desktop)
-	area.addEventListener('mousedown', startPressTimer);
-	area.addEventListener('mouseup', cancelPressTimer);
-	area.addEventListener('mouseleave', cancelPressTimer);
-</script>
 
 </body>
-
 </html>

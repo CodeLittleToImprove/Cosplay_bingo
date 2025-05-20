@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, max-age=0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cosplay Spielfeld Level Baka</title>
+	<link rel="stylesheet" href="css/bingo_board_style.css">
+	<link rel="stylesheet" href="css/modal.css">
+	<script src="scripts/bingo_level1.js" defer></script>
+</head>
+
+
+<body>
+<div id="tutorial-modal" class="modal">
+	<div class="modal-content">
+		<span id="tutorial-modal-close" class="close">&times;</span>
+		<h2>Wie diese Webseite funktioniert</h2>
+		<p>Einfacher Klick auf ein Bingo-Feld: Dadurch wird das Feld als ausgewählt markiert.</p>
+		<p>Doppelklick auf ein Bingo-Feld: Dadurch wird ein Menü geöffnet, das Optionen zum Kopieren des
+			spezifischen und des allgemeinen Hashtags in die Zwischenablage oder zum Anzeigen von Bildern bietet,
+			die
+			mit diesem spezifischen Hashtag eingereicht wurden.</p>
+		<p>Deswegen würde ich mich freuen, wenn du deine Bilder auf Instagram hochlädst und mit allen teilst.</p>
+	</div>
+</div>
+<div class="table-wrap" tabindex="-1">
+	<table id="bingo-board" lang="de">
+		<tr>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+		</tr>
+		<tr>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+		</tr>
+		<tr>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+		</tr>
+		<tr>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+		</tr>
+		<tr>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+			<td class="bingo-cell"></td>
+		</tr>
+	</table>
+	<div class="all-buttons">
+		<button id="reset-button">Neustart</button>
+		<button id="tutorial-button">Hilfe</button>
+		<button id="view-all-button">Bilder anschauen</button>
+	</div>
+</div>
+<div id="context_Modal" class="modal context">
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<h2 id="modal-title">Placeholder</h2>
+		<p id="modal-text">Placeholder Inhalt</p>
+		<div class="modal-buttons">
+			<button id="modal-button1">Button1 Name Placeholder</button>
+			<button id="modal-button2">Button2 Name Placeholder</button>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>
