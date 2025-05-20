@@ -29,63 +29,26 @@ h1:after {
   transition: 500ms all ease-in-out;
 }
 
-a.full-link {
-  display: block;
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  color: inherit;
-  text-decoration: none;
-}
-
-a.full-link .cta {
-  display: block;
-  position: absolute;
-  height: 50px;
-  line-height: 50px;
-  width: 120px;
-  text-align: center;
-  color: #fff;
-  left: 50%;
-  bottom: 20%;
-  transform: translateX(-50%);
-  border: 2px solid #fff;
-  font-size: 0.75em;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
+a.full-link .cta,
 a.cta {
   display: block;
   position: absolute;
-  height: 50px;
-  line-height: 50px;
-  width: 120px;
+  height: 70px;
+  line-height: 70px;
+  width: 140px;
   text-align: center;
   color: #fff;
   text-decoration: none;
   left: 50%;
-  bottom: 20%;
+  bottom: 30%;
   transform: translateX(-50%);
   border: 2px solid #fff;
-  font-size: 0.75em;
+  font-size: 0.9em;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-}
-a.cta:before {
-  content: "";
-  background: #fff;
-  height: 0;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  transition: 300ms all ease-in-out;
-}
-a.cta:hover:before {
-  height: 4px;
+  transition: transform 0.3s ease;
+
 }
 
 .container {
@@ -103,7 +66,7 @@ a.cta:hover:before {
 .container .one-half.left {
   left: 0;
   background: url('../images/mainstream_level.webp') center center no-repeat;
-  background-size: 90%;
+  background-size: cover;
 }
 .container .one-half.left:before {
   content: "";
@@ -115,7 +78,7 @@ a.cta:hover:before {
 .container .one-half.right {
   right: 0;
   background: url('../images/weeb_level.webp') center center no-repeat;
-  background-size: 90%;
+  background-size: cover;
 }
 .container .one-half.right:before {
   content: "";
@@ -157,9 +120,25 @@ a.cta:hover:before {
   z-index: 2;
 }
 
+.container.left-is-hovered .left .cta,
+.container.right-is-hovered .right .cta {
+  transform: translateX(-50%) scale(1.5); /* centered and scaled */
+}
+
 @media screen and (max-width: 700px) {
   h1 {
     white-space: normal;
     overflow-wrap: break-word;
+  }
+  .container .one-half.left {
+    left: 0;
+    background: url('../images/mainstream_level.webp') center center no-repeat;
+    background-size: 90%;
+  }
+
+  .container .one-half.right {
+    right: 0;
+    background: url('../images/weeb_level.webp') center center no-repeat;
+    background-size: 90%;
   }
 }
