@@ -20,7 +20,7 @@ window.addEventListener('pagehide', () => {
 
 // Main logic
 document.addEventListener("DOMContentLoaded", () => {
-    const userLang = navigator.language || navigator.userLanguage;
+    const userLang = navigator.language;
     const isGerman = userLang.startsWith("de");
 
     // Language switch
@@ -46,18 +46,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Secret area placement
-    const secretArea = document.getElementById('secret-area');
+    const area = document.getElementById('secret-area');
     const headline = document.querySelector('.page-headline');
-    if (headline && secretArea) {
+
+    if (headline && area) {
         const rect = headline.getBoundingClientRect();
-        secretArea.style.top = rect.top + window.scrollY + "px";
-        secretArea.style.left = rect.left + window.scrollX + "px";
-        secretArea.style.width = rect.width + "px";
-        secretArea.style.height = rect.height + "px";
+
+        area.style.top = rect.top + window.scrollY + "px";
+        area.style.left = rect.left + window.scrollX + "px";
+        area.style.width = rect.width + "px";
+        area.style.height = rect.height + "px";
     }
 
-    // Secret area logic
-    const secretUrl = isGerman ? "dein-geheimes-seite.html" : "your-secret-page.html";
+    const secretUrl = isGerman ? "bingo_board_level_baka_ger.html" : "bingo_board_level_baka.html";
+
     let pressTimer;
 
     function startPressTimer() {
@@ -70,10 +72,14 @@ document.addEventListener("DOMContentLoaded", () => {
         clearTimeout(pressTimer);
     }
 
-    secretArea.addEventListener('touchstart', startPressTimer);
-    secretArea.addEventListener('touchend', cancelPressTimer);
-    secretArea.addEventListener('touchcancel', cancelPressTimer);
-    secretArea.addEventListener('mousedown', startPressTimer);
-    secretArea.addEventListener('mouseup', cancelPressTimer);
-    secretArea.addEventListener('mouseleave', cancelPressTimer);
+    // Add event listeners
+    area.addEventListener('touchstart', startPressTimer);
+    area.addEventListener('touchend', cancelPressTimer);
+    area.addEventListener('touchcancel', cancelPressTimer);
+    area.addEventListener('mousedown', startPressTimer);
+    area.addEventListener('mouseup', cancelPressTimer);
+    area.addEventListener('mouseleave', cancelPressTimer);
+
+    // Prevent context menu from opening
+    area.addEventListener('contextmenu', e => e.preventDefault());
 });
