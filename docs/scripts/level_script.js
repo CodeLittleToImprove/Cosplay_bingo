@@ -46,17 +46,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Secret area placement
+    const headlines = document.querySelectorAll('.page-headline');
     const area = document.getElementById('secret-area');
-    const headline = document.querySelector('.page-headline');
 
-    if (headline && area) {
-        const rect = headline.getBoundingClientRect();
+    if (area && headlines.length > 0) {
+        headlines.forEach(headline => {
+            const rect = headline.getBoundingClientRect();
 
-        area.style.top = rect.top + window.scrollY + "px";
-        area.style.left = rect.left + window.scrollX + "px";
-        area.style.width = rect.width + "px";
-        area.style.height = rect.height + "px";
+            area.style.top = rect.top + window.scrollY + "px";
+            area.style.left = rect.left + window.scrollX + "px";
+            area.style.width = rect.width + "px";
+            area.style.height = rect.height + "px";
+        });
     }
+
 
     const secretUrl = isGerman ? "bingo_board_level_baka_ger.html" : "bingo_board_level_baka.html";
 
@@ -74,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         clearTimeout(tapTimer);
         tapTimer = setTimeout(() => {
             tapCount = 0; // Reset tap count after 1 second of inactivity
-        }, 400);
+        }, 1000);
     }
 
     ['click', 'touchstart'].forEach(evt =>
