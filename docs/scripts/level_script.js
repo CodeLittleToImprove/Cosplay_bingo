@@ -60,26 +60,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const secretUrl = isGerman ? "bingo_board_level_baka_ger.html" : "bingo_board_level_baka.html";
 
-    let pressTimer;
+    const secretArea = document.getElementById('secret-area');
+    let tapCount = 0;
+    let tapTimer;
 
-    function startPressTimer() {
-        pressTimer = setTimeout(() => {
+    function registerTap() {
+        tapCount++;
+
+        if (tapCount >= 5) {
             window.location.href = secretUrl;
-        }, 2000);
+        }
+
+        clearTimeout(tapTimer);
+        tapTimer = setTimeout(() => {
+            tapCount = 0; // Reset tap count after 1 second of inactivity
+        }, 1000);
     }
 
-    function cancelPressTimer() {
-        clearTimeout(pressTimer);
-    }
-
-    // Add event listeners
-    area.addEventListener('touchstart', startPressTimer);
-    area.addEventListener('touchend', cancelPressTimer);
-    area.addEventListener('touchcancel', cancelPressTimer);
-    area.addEventListener('mousedown', startPressTimer);
-    area.addEventListener('mouseup', cancelPressTimer);
-    area.addEventListener('mouseleave', cancelPressTimer);
-
-    // Prevent context menu from opening
-    area.addEventListener('contextmenu', e => e.preventDefault());
+    ['click', 'touchstart'].forEach(evt =>
+        secretArea.addEventListener(evt, registerTap)
+    );
 });
