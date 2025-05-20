@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         clearTimeout(tapTimer);
         tapTimer = setTimeout(() => {
             tapCount = 0; // Reset tap count after 1 second of inactivity
-        }, 1000);
+        }, 400);
     }
 
     ['click', 'touchstart'].forEach(evt =>
