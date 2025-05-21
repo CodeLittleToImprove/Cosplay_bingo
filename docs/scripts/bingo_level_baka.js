@@ -47,32 +47,33 @@ async function loadWordsFromCSV(path)
 
 
 const WORDS_FALLBACK = [
-    {de: "Oldschool Anime Charakter", en: "old-school anime character"},
-    {de: "Computergenerierte Stimme", en: "computer generated voice"},
-    {de: "Dein Lieblingscharakter", en: "your favorite character"},
-    {de: "Hintergrundcharakter", en: "background character"},
-    {de: "Geschlechtertausch", en: "genderswap"},
-    {de: "Gruppencosplay", en: "group cosplay"},
-    {de: "Toter Charakter", en: "dead character"},
-    {de: "Eltern Rip", en: "parents rip"},
-    {de: "Wem ist sicher kalt", en: "someone who is definitely cold"},
+    {de: "Videospielcharakter", en: "Videogame character"},
+    {de: "Ungewöhnliche Haarfarbe", en: "Unusual haircolor"},
+    {de: "Gruppencosplay", en: "Group cosplay"},
+    {de: "Wem ist sicher kalt", en: "Someone who is definitely cold"},
     {de: "Charakter den du nicht kennst", en: "a character that you dont know"},
-    {de: "Flauschig", en: "fluffy"},
-    {de: "Kawaii", en: "kawaii"},
-    {de: "Wem ist sicher warm", en: "someone who is definitely warm"},
-    {de: "Physikalisch unmögliche Haare", en: "physical impossible hair"},
-    {de: "Gender Fragezeichen", en: "What is your Gender"},
-    {de: "Zeitreisender", en: "timetraveller"},
-    {de: "Anime dass dich zum weinen gebracht hat", en: "anime that made you cry"},
-    {de: "Dein Anime Schwarm", en: "your anime crush"},
-    {de: "Cosplay Zwilling oder gleiches Shirt", en: "cosplay twin or same shirt"},
-    {de: "Cosplayer mit Kontaktlinsen", en: "cosplayer with contact lenses"},
-    {de: "Cyberpunk Edgerunner", en: "Cyberpunk Edgerunner"},
-    {de: "Bocchi the rock", en: "Bocchi the rock"},
-    {de: "Satoru Gojo", en: "Satoru Gojo"},
-    {de: "Aufwendiges Cosplay", en: "High effort Cosplay"},
-    {de: "Spy X Family", en: "Spy X Family"}
+    {de: "Wem ist sicher warm", en: "Someone who is definitely warm"},
+    {de: "Cosplay Zwilling oder gleiches Shirt", en: "Cosplay twin or same shirt"},
+    {de: "Das ist doch der Charakter aus dem Film?", en: "Isn't that the character from the movie?"},
+    {de: "Aufwendiges Cosplay", en: "High effort cosplay"},
+    {de: "Cosplayer mit Kontaktlinsen", en: "Cosplayer with contact lenses"},
+    {de: "Flauschig <3", en: "Fluffy <3"},
+    {de: "Muss seit Stunden aufs Klo aber zu viel Aufwand", en: "Needs the bathroom but it's too much work"},
+    {de: "Krasse Waffe", en: "Sick weapon"},
+    {de: "Kreativste Cosplay Idee", en: "Most creative cosplay idea"},
+    {de: "Cosplay ist sicher unbequem", en: "Cosplay is certainly uncomfortable"},
+    {de: "Mein nächstes Cosplay", en: "My next cosplay"},
+    {de: "Würde die Prügelei wahrscheinlich nicht überleben", en: "Probably wouldn't survive the fight"},
+    {de: "Hat ein Maskottchen dabei", en: "Has a mascot with him"},
+    {de: "Könnte Nachts schon gruselig sein", en: "Could be scary at night"},
+    {de: "Ist das Pikachu?", en: "Is that Pikachu?"},
+    {de: "Endboss vibes", en: "Final boss vibes"},
+    {de: "Wahrscheinlich das beste Cosplay dass ich heute gesehen habe", en: "Probably best cosplay I have seen today"},
+    {de: "Verdammt bist du groß!", en: "Damn you are big"},
+    {de: "Nicht menschliches Cosplay", en: "Non-human cosplay"},
+    {de: "Katzenohren <3", en: "Cat ears <3"}
 ];
+
 
 // ========== Utility Functions ==========
 function detectLanguage()
@@ -226,10 +227,12 @@ window.addEventListener('click', (event) =>
 //     });
 // }
 
-function autoResizeCellFonts() {
+function autoResizeCellFonts()
+{
     const cells = document.querySelectorAll('#bingo-board td');
 
-    cells.forEach(cell => {
+    cells.forEach(cell =>
+    {
         const textLength = cell.textContent.trim().length;
 
         // Use smaller font if the total text is longer than 9 characters

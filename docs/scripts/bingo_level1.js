@@ -47,32 +47,33 @@ async function loadWordsFromCSV(path)
 
 
 const WORDS_FALLBACK = [
-    {de: "Oldschool Anime Charakter", en: "old-school anime character"},
-    {de: "Computergenerierte Stimme", en: "computer generated voice"},
-    {de: "Dein Lieblingscharakter", en: "your favorite character"},
-    {de: "Hintergrundcharakter", en: "background character"},
-    {de: "Geschlechtertausch", en: "genderswap"},
+    {de: "Oldschool Anime Charakter", en: "Old-school anime character"},
+    {de: "Underated Anime 2024", en: "Underated Anime 2024"},
+    {de: "Dein Lieblingscharakter", en: "Your favorite character"},
+    {de: "Wem ist sicher kalt", en: "Someone who is definitely cold"},
     {de: "Gruppencosplay", en: "group cosplay"},
-    {de: "Toter Charakter", en: "dead character"},
-    {de: "Eltern Rip", en: "parents rip"},
-    {de: "Wem ist sicher kalt", en: "someone who is definitely cold"},
-    {de: "Charakter den du nicht kennst", en: "a character that you dont know"},
-    {de: "Flauschig", en: "fluffy"},
-    {de: "Kawaii", en: "kawaii"},
-    {de: "Wem ist sicher warm", en: "someone who is definitely warm"},
-    {de: "Physikalisch unmögliche Haare", en: "physical impossible hair"},
-    {de: "Gender Fragezeichen", en: "What is your Gender"},
-    {de: "Zeitreisender", en: "timetraveller"},
-    {de: "Anime dass dich zum weinen gebracht hat", en: "anime that made you cry"},
-    {de: "Dein Anime Schwarm", en: "your anime crush"},
-    {de: "Cosplay Zwilling oder gleiches Shirt", en: "cosplay twin or same shirt"},
-    {de: "Cosplayer mit Kontaktlinsen", en: "cosplayer with contact lenses"},
-    {de: "Cyberpunk Edgerunner", en: "Cyberpunk Edgerunner"},
-    {de: "Bocchi the rock", en: "Bocchi the rock"},
-    {de: "Satoru Gojo", en: "Satoru Gojo"},
-    {de: "Aufwendiges Cosplay", en: "High effort Cosplay"},
-    {de: "Spy X Family", en: "Spy X Family"}
+    {de: "Wem ist sicher warm", en: "Someone who is definitely warm"},
+    {de: "Cosplay Zwilling oder gleiches Shirt", en: "Cosplay twin or same shirt"},
+    {de: "Toter Charakter", en: "Dead character"},
+    {de: "Aufwendiges Cosplay", en: "High effort cosplay"},
+    {de: "Geschlecht??", en: "Gender??"},
+    {de: "Flauschig <3", en: "Fluffy <3"},
+    {de: "Genshin oder Honkai Star Rail", en: "Genshin or Honkai Star Rail"},
+    {de: "Krasse Waffe", en: "Sick weapon"},
+    {de: "Kreativste Cosplay Idee", en: "Most creative cosplay idea"},
+    {de: "Cosplay ist sicher unbequem", en: "Cosplay is certainly uncomfortable"},
+    {de: "MaoMao", en: "MaoMao"},
+    {de: "1vs1 wäre keine gute Idee :(", en: "1vs1 would be a bad idea :("},
+    {de: "Anime des Jahres", en: "Anime of the year"},
+    {de: "Könnte Nachts schon gruselig sein", en: "Could be scary at night"},
+    {de: "Kawaii UwU", en: "Kawaii UwU"},
+    {de: "Kann Sung Jin-woo besiegen", en: "Can defeat Sung Jin-woo"},
+    {de: "Best Girl 2024", en: "Best Girl 2024"},
+    {de: "Physikalisch unmögliche Haare", en: "Physical impossible hair"},
+    {de: "Best Boy 2024", en: "Best Boy 2024"},
+    {de: "Anime dass dich zum weinen gebracht hat", en: "Anime that made you cry"}
 ];
+
 
 // ========== Utility Functions ==========
 function detectLanguage()
