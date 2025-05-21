@@ -12,34 +12,42 @@ $right
     .on('mouseleave', () => $container.removeClass('right-is-hovered'));
 
 // Handle pagehide cleanup
-window.addEventListener('pagehide', () => {
+window.addEventListener('pagehide', () =>
+{
     localStorage.clear();
     sessionStorage.clear();
     console.log('Page is hiding, storage cleared.');
 });
 
 // Main logic
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () =>
+{
     const userLang = navigator.language;
     const isGerman = userLang.startsWith("de");
 
     // Language switch
     const enSection = document.getElementById("en");
     const deSection = document.getElementById("de");
-    if (isGerman) {
+    if (isGerman)
+    {
         deSection.style.display = "block";
-    } else {
+    }
+    else
+    {
         enSection.style.display = "block";
     }
     document.body.style.visibility = "visible";
 
     // Link transitions
-    document.querySelectorAll('.full-link').forEach(link => {
-        link.addEventListener('click', function (e) {
+    document.querySelectorAll('.full-link').forEach(link =>
+    {
+        link.addEventListener('click', function (e)
+        {
             e.preventDefault();
             const href = this.dataset.href;
             document.body.classList.add('page-exit');
-            setTimeout(() => {
+            setTimeout(() =>
+            {
                 window.location.href = href;
             }, 800);
         });
@@ -62,12 +70,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const visibleHeadline = document.querySelector('.language-section.container[style*="block"] .page-headline');
     const secretArea = document.getElementById('secret-area');
-    if (secretArea && visibleHeadline) {
+    console.log("Looking for visible headline...");
+    if (!visibleHeadline)
+    {
+        console.warn("No visible .page-headline found in currently shown language section.");
+    }
+
+    if (!secretArea)
+    {
+        console.warn("Secret area (#secret-area) not found.");
+    }
+    if (secretArea && visibleHeadline)
+    {
+        console.log("Found visible headline:", visibleHeadline.textContent);
         const rect = visibleHeadline.getBoundingClientRect();
+        console.log("Headline rect:", rect);
         secretArea.style.top = rect.top + window.scrollY + "px";
         secretArea.style.left = rect.left + window.scrollX + "px";
         secretArea.style.width = rect.width + "px";
-        asecretArearea.style.height = rect.height + "px";
+        secretArea.style.height = rect.height + "px";
+        console.log("Secret area positioned:", {
+            top: secretArea.style.top,
+            left: secretArea.style.left,
+            width: secretArea.style.width,
+            height: secretArea.style.height
+        });
     }
 
 
@@ -77,15 +104,18 @@ document.addEventListener("DOMContentLoaded", () => {
     let tapCount = 0;
     let tapTimer;
 
-    function registerTap() {
+    function registerTap()
+    {
         tapCount++;
 
-        if (tapCount >= 5) {
+        if (tapCount >= 5)
+        {
             window.location.href = secretUrl;
         }
 
         clearTimeout(tapTimer);
-        tapTimer = setTimeout(() => {
+        tapTimer = setTimeout(() =>
+        {
             tapCount = 0; // Reset tap count after 1 second of inactivity
         }, 1000);
     }
