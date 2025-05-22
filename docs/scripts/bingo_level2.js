@@ -45,33 +45,32 @@ async function loadWordsFromCSV(path)
     }
 }
 
-
 const WORDS_FALLBACK = [
-    {de: "Charakter aus Anime 2022 oder 2023", en: "character from anime in 2022 or 2023"},
-    {de: "JRPG", en: "JRPG"},
-    {de: "Ikemen", en: "ikemen"},
-    {de: "Bijin", en: "bijin"},
-    {de: "Charakter nur im Manga", en: "manga inclusive character"},
-    {de: "Anime mit mehr als 100 Episoden", en: "anime with more 100 episodes"},
-    {de: "Cosplay von einem zukünftigen Anime", en: "cosplay from upcoming anime"},
-    {de: "Anime dessen Studio gewechselt hat", en: "anime that changed studios"},
-    {de: "Non Default Kostüm", en: "non default skin cosplay"},
-    {de: "Kouhai und Senpai in Szene", en: "kouhai and senpai posing"},
-    {de: "Anime der ein Remake hat", en: "anime with a remake"},
-    {de: "Kyotoani Charakter", en: "kyoto Ani character"},
-    {de: "Studio Bones Anime", en: "studio Bones Anime"},
-    {de: "Yandere Charakter", en: "yandere Character"},
-    {de: "Eine von Marin Kitagawa Cosplays", en: "one cosplay from Marin Kitagawa"},
-    {de: "Charakter mit ikonischen Catchphrase", en: "character with an iconic Catchphrase"},
-    {de: "Zwei Charaktere mit gleichen Synchronsprecher", en: "two character with the same Voice Actor"},
-    {de: "Genshin Archonten", en: "Genshin Archon"},
-    {de: "Lycoris Recoil", en: "Lycoris Recoil"},
-    {de: "Verräter", en: "traitor"},
-    {de: "Charakter der einen Bodysuit trägt", en: "character who wears body suit"},
-    {de: "Dein Lieblingscharakter", en: "your favorite character"},
-    {de: "Anime mit mindestens einen Film ", en: "anime with at least one movie"},
-    {de: "Charakter der in Memes benutzt wird", en: "character which is used in a meme"},
-    {de: "Charakter der an einem Turnier Arc teilnimmt", en: "character who participates in a tournament arc"}
+  {de: "Charakter aus Anime 2024 oder 2025", en: "Character from Anime in 2024 or 2025"},
+  {de: "Anime mit Plot Twist", en: "Anime with a plot twist"},
+  {de: "Ikemen", en: "Ikemen"},
+  {de: "Bijin", en: "Bijin"},
+  {de: "Charakter nur im Manga", en: "Manga inclusive character"},
+  {de: "Anime mit mehr als 100 Episoden", en: "Anime with more than 100 episodes"},
+  {de: "Cosplay von einem zukünftigen Anime", en: "Cosplay from upcoming anime"},
+  {de: "Anime dessen Studio gewechselt hat", en: "Anime that changed studios"},
+  {de: "Non Default Kostüm", en: "Non default skin cosplay"},
+  {de: "Kouhai und Senpai in Szene", en: "Kouhai and senpai posing"},
+  {de: "Anime der ein Remake hat", en: "Anime with a remake"},
+  {de: "Kyotoani Charakter", en: "Kyoto Ani character"},
+  {de: "Studio Bones Anime", en: "Studio Bones Anime"},
+  {de: "Tsundere Charakter", en: "Tsundere character"},
+  {de: "Charakter der das Genre gebrochen hat", en: "Character who broke the genre"},
+  {de: "Charakter mit ikonischen Catchphrase", en: "Character with an iconic Catchphrase"},
+  {de: "Charakter mit geringer Screentime im Anime aber voll wichtig ist", en: "Character with little screentime in the anime but is fully important"},
+  {de: "Genshin Archon", en: "Genshin Archon"},
+  {de: "Anime dessen Ende niemand verstanden hat", en: "Anime with an ending no one understood"},
+  {de: "Charakter mit 2 verschiedenen Augenfarben", en: "Character with 2 different eye colors"},
+  {de: "Character von einem Handyspiel (no mainstream)", en: "Character from a mobile game (no mainstream)"},
+  {de: "Dein Lieblingscharakter", en: "Your favorite character"},
+  {de: "Anime mit mindestens einen Film", en: "Anime with at least one movie"},
+  {de: "Charakter der in Memes benutzt wird", en: "Character which is used in a meme"},
+  {de: "Charakter der an einem Turnier Arc teilnimmt", en: "Character who participates in a tournament arc"}
 ];
 
 // ========== Utility Functions ==========
@@ -213,6 +212,31 @@ window.addEventListener('click', (event) =>
 });
 
 // ========== Bingo Logic ==========
+
+// function autoResizeCellFonts() {
+//     const cells = document.querySelectorAll('#bingo-board td');
+//
+//     cells.forEach(cell => {
+//         const words = cell.textContent.trim().split(/\s+/);
+//         const hasLongWord = words.some(word => word.length > 9);
+//
+//         // Use smaller font if there's a long word
+//         cell.style.fontSize = hasLongWord ? '3vmin' : '4vmin';
+//     });
+// }
+
+function autoResizeCellFonts() {
+    const cells = document.querySelectorAll('#bingo-board td');
+
+    cells.forEach(cell => {
+        const textLength = cell.textContent.trim().length;
+
+        // Use smaller font if the total text is longer than 9 characters
+        cell.style.fontSize = textLength > 9 ? '3vmin' : '4vmin';
+    });
+}
+
+
 function fillBingoBoard(words, indices, lang)
 {
     const table = document.getElementById("bingo-board");
@@ -224,6 +248,7 @@ function fillBingoBoard(words, indices, lang)
             cell.textContent = words[indices[index++]][lang];
         }
     }
+    //autoResizeCellFonts();
 }
 
 function setupCellEvents(cell, words, lang, table, key)
@@ -347,7 +372,7 @@ window.addEventListener("DOMContentLoaded", async () =>
     let words = WORDS_FALLBACK;
     try
     {
-        const result = await loadWordsFromCSV("level2.csv");
+        const result = await loadWordsFromCSV("bingoboards/level2.csv");
         if (result.words.length > 0)
         {
             words = result.words;
@@ -375,3 +400,4 @@ window.addEventListener("DOMContentLoaded", async () =>
         window.open(url, '_blank');
     };
 });
+
