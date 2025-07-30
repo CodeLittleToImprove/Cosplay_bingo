@@ -1,7 +1,7 @@
 // ========== Constants ==========
 const ROWS = 5;
 const COLS = 5;
-const DEFAULT_EVENT_NAME = "JAPANTAG2025";
+const DEFAULT_EVENT_NAME = "ANIMAGIC2025";
 let eventName = DEFAULT_EVENT_NAME;
 
 
