@@ -185,7 +185,20 @@ function openContextModal(title, text, button1Text, button2Text, url)
     const button2 = document.getElementById("modal-button2");
 
     document.getElementById("modal-title").textContent = title;
-    document.getElementById("modal-text").textContent = text;
+// Splitting the instruction text and the hashtag dynamically
+    if (text.includes("#")) {
+        const hashIndex = text.indexOf("#");
+        const instruction = text.substring(0, hashIndex);
+        const hashtag = text.substring(hashIndex);
+
+        document.getElementById("modal-text").innerHTML = `
+            ${instruction}
+            <span class="hashtag-badge">${hashtag}</span>
+        `;
+    } else {
+        // Fallback just in case a text string doesn't have a hashtag
+        document.getElementById("modal-text").textContent = text;
+    }
     document.getElementById("modal-button1").textContent = button1Text;
 
     button2.textContent = button2Text;
