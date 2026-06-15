@@ -113,35 +113,30 @@ function detectLanguage() {
 
 // ========== CSV Parsing Engine ==========
 async function loadWordsFromCSV(path) {
-    try {
-        const response = await fetch(path);
-        if (!response.ok) throw new Error(`Failed to fetch ${path}`);
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`Failed to fetch ${path}`);
 
-        const text = await response.text();
-        const lines = text.trim().split("\n").map(line => line.trim());
+    const text = await response.text();
+    const lines = text.trim().split("\n").map(line => line.trim());
 
-        // Handle eventname
-        let extractedEventName = DEFAULT_EVENT_NAME;
-        if (lines[0].startsWith("eventname,")) {
-            extractedEventName = lines[0].split(",")[1].trim();
-            lines.shift();
-        }
-
-        const headers = lines.shift()?.split(",").map(h => h.trim().toLowerCase());
-        if (!headers || headers.length !== 2 || headers[0] !== "de" || headers[1] !== "en") {
-            throw new Error("Invalid header in CSV. Expected: 'de,en'");
-        }
-
-        const words = lines.map(line => {
-            const [de, en] = line.split(",").map(val => val.trim());
-            return { de, en };
-        });
-
-        return { eventName: extractedEventName, words };
-    } catch (error) {
-        console.error("Error loading CSV:", error);
-        return { eventName: DEFAULT_EVENT_NAME, words: [] };
+    // Handle eventname
+    let extractedEventName = DEFAULT_EVENT_NAME;
+    if (lines[0].startsWith("eventname,")) {
+        extractedEventName = lines[0].split(",")[1].trim();
+        lines.shift();
     }
+
+    const headers = lines.shift()?.split(",").map(h => h.trim().toLowerCase());
+    if (!headers || headers.length !== 2 || headers[0] !== "de" || headers[1] !== "en") {
+        throw new Error("Invalid header in CSV. Expected: 'de,en'");
+    }
+
+    const words = lines.map(line => {
+        const [de, en] = line.split(",").map(val => val.trim());
+        return {de, en};
+    });
+
+    return {eventName: extractedEventName, words};
 }
 
 // ========== Core Bingo Board Initialization ==========
@@ -355,16 +350,17 @@ window.addEventListener("DOMContentLoaded", async () => {
     const currentLevel = getLevelFromFilename();
     const lang = detectLanguage();
     const table = document.getElementById("bingo-board");
-
     const config = LEVEL_CONFIGS[currentLevel];
-    let words = config.fallback;
 
-    const result = await loadWordsFromCSV(config.csvPath);
-    if (result && result.words.length > 0) {
+    let words = config.fallback;
+    let eventName = DEFAULT_EVENT_NAME;
+
+    try {
+        const result = await loadWordsFromCSV(config.csvPath);
         words = result.words;
         eventName = result.eventName;
-    } else {
-        eventName = DEFAULT_EVENT_NAME;
+    } catch (error) {
+        console.error("Successfully caught error. Reverting to fallbacks.", error);
     }
 
     const storageKey = `bingoState_${eventName.toLowerCase()}_${currentLevel}`;
