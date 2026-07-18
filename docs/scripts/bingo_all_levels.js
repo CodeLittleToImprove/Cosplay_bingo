@@ -117,26 +117,34 @@ async function loadWordsFromCSV(path) {
     if (!response.ok) throw new Error(`Failed to fetch ${path}`);
 
     const text = await response.text();
-    const lines = text.trim().split("\n").map(line => line.trim());
+
+    // FIX: Split by both \r and \n, then filter out empty rows
+    const lines = text.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
+
+    if (lines.length === 0) {
+        return { eventName: DEFAULT_EVENT_NAME, words: [] };
+    }
 
     // Handle eventname
     let extractedEventName = DEFAULT_EVENT_NAME;
-    if (lines[0].startsWith("eventname,")) {
+    if (lines[0].toLowerCase().startsWith("eventname,")) {
         extractedEventName = lines[0].split(",")[1].trim();
-        lines.shift();
+        lines.shift(); // Remove eventname line safely
     }
 
+    // Expect headers: "de,en"
     const headers = lines.shift()?.split(",").map(h => h.trim().toLowerCase());
     if (!headers || headers.length !== 2 || headers[0] !== "de" || headers[1] !== "en") {
         throw new Error("Invalid header in CSV. Expected: 'de,en'");
     }
 
+    // Parse word entries safely
     const words = lines.map(line => {
         const [de, en] = line.split(",").map(val => val.trim());
-        return {de, en};
+        return { de, en };
     });
 
-    return {eventName: extractedEventName, words};
+    return { eventName: extractedEventName, words };
 }
 
 // ========== Core Bingo Board Initialization ==========
@@ -353,7 +361,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     const config = LEVEL_CONFIGS[currentLevel];
 
     let words = config.fallback;
-    let eventName = DEFAULT_EVENT_NAME;
+    eventName = DEFAULT_EVENT_NAME;
 
     try {
         const result = await loadWordsFromCSV(config.csvPath);
