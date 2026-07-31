@@ -183,12 +183,14 @@ function initBingoBoard(table, words, storageKey, lang) {
         };
 
         // Double Click Handler
+// Double Click Handler
         cellElement.ondblclick = () => {
-            const currentText = lang === "de" ? cellData.textDe : cellData.textEn;
-            const cleanText = currentText.replace(/[^a-zA-Z0-9]/g, "");
-            const cleanEventName = eventName.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+            // Title shown in the modal follows the user's display language
+            const title = lang === "de" ? cellData.textDe : cellData.textEn;
 
-            const title = currentText;
+            // Hashtag ALWAYS uses English text (textEn), regardless of language mode
+            const cleanText = cellData.textEn.replace(/[^a-zA-Z0-9]/g, "");
+            const cleanEventName = eventName.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
 
             // Build the two distinct hashtags
             const cardHashtag = `#${cleanText}_${cleanEventName}`;
